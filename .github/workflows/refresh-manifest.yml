@@ -1,0 +1,70 @@
+name: Refresh runtime manifest (reusable)
+
+# Single source of truth for manifest generation. Called by sync-source,
+# update-runtime and (inline, in the same job) process-submission so a single
+# concurrency group serializes every writer of runtime/manifest.json.
+on:
+  workflow_call:
+    inputs:
+      branch:
+        required: true
+        type: string
+      snapshot-sha:
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: locale-submission-processing
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    name: Generate and publish manifest
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ inputs.branch }}
+          fetch-depth: 1
+
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Refresh manifest
+        env:
+          BRANCH: ${{ inputs.branch }}
+          INPUT_SNAPSHOT_SHA: ${{ inputs.snapshot-sha }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin "$BRANCH"
+            # The processor commits via the GraphQL API, so the checkout is
+            # stale. Always start from the real branch head before generating.
+            git reset --hard "origin/$BRANCH"
+            SNAPSHOT_SHA="${INPUT_SNAPSHOT_SHA:-$(git rev-parse HEAD)}"
+            export SNAPSHOT_SHA
+            node tools/bin/manifest.js --write
+            if git diff --quiet -- runtime/manifest.json; then
+              echo "Manifest unchanged"
+              exit 0
+            fi
+            git add runtime/manifest.json
+            git commit -m "chore: refresh runtime translation manifest [skip ci]"
+            if git push origin "HEAD:$BRANCH"; then
+              echo "Manifest published from $(git rev-parse HEAD)"
+              exit 0
+            fi
+            echo "Push failed (non-fast-forward); regenerating on latest head (attempt $attempt)"
+          done
+          echo "Could not publish manifest after 5 attempts" >&2
+          exit 1

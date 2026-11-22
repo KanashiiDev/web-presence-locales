@@ -1,0 +1,28 @@
+name: Publish runtime manifest
+
+# Publishes a snapshot-pinned manifest after translation files change. The
+# application reads runtime/manifest.json to discover the latest version and
+# fetches all locale files from the same immutable snapshot SHA.
+#
+# Commits made by the submission processor use github.token and do NOT trigger
+# this workflow; process-submission.yml refreshes the manifest inline in that
+# case. This workflow covers human pushes to locales/**.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'locales/**'
+
+permissions:
+  contents: write
+
+# The reusable workflow owns the shared `locale-submission-processing`
+# concurrency group, so this caller must not claim the same group itself.
+
+jobs:
+  publish:
+    name: Refresh runtime manifest
+    uses: ./.github/workflows/refresh-manifest.yml
+    with:
+      branch: ${{ github.ref_name }}

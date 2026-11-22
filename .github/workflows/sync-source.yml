@@ -1,0 +1,72 @@
+name: Sync English source mirror
+
+# Keeps locales/en (a derived, read-only mirror of web-presence) current.
+# The main repository dispatches this workflow whenever its English source changes.
+on:
+  repository_dispatch:
+    types: [sync-english-source]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    name: Refresh mirror and manifest
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Single writer group shared with submission processing and manifest
+    # publishing. The manifest job below defers to the reusable workflow's
+    # concurrency declaration instead of claiming the same group here.
+    concurrency:
+      group: locale-submission-processing
+      cancel-in-progress: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Sync and commit English mirror
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          BRANCH: ${{ github.ref_name }}
+          # Prefer the commit carried by the dispatch payload; never silently
+          # fetch a different upstream HEAD than the one that triggered us.
+          SOURCE_SHA: ${{ github.event.client_payload.commit || github.event.client_payload.sha || github.event.client_payload.after || '' }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin "$BRANCH"
+            git reset --hard "origin/$BRANCH"
+            node tools/bin/sync-source.js --token "$GITHUB_TOKEN"
+            # `git diff --quiet` ignores untracked files, so use porcelain.
+            if [ -z "$(git status --porcelain -- locales/en)" ]; then
+              echo "English mirror is already current"
+              exit 0
+            fi
+            git add locales/en
+            git commit -m "chore: sync English source mirror [skip ci]"
+            if git push origin "HEAD:$BRANCH"; then
+              exit 0
+            fi
+            echo "Push failed; regenerating on latest head (attempt $attempt)"
+          done
+          echo "Could not publish mirror after 5 attempts" >&2
+          exit 1
+
+  manifest:
+    name: Publish manifest
+    needs: sync
+    if: always()
+    uses: ./.github/workflows/refresh-manifest.yml
+    with:
+      branch: ${{ github.ref_name }}

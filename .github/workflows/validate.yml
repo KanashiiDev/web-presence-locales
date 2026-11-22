@@ -1,0 +1,94 @@
+name: Validate locale data
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'locales/**'
+      - 'submissions/**'
+      - 'tools/**'
+      - '.github/workflows/**'
+      - 'package.json'
+  push:
+    branches: [main]
+    paths:
+      - 'locales/**'
+      - 'tools/**'
+      - '.github/workflows/**'
+      - 'package.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: locale-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  qa:
+    name: Translation QA
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: .nvmrc
+      - name: Translation QA
+        run: node tools/bin/validate.js
+
+  submission-paths:
+    name: Submission PR path guard
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: .nvmrc
+      - name: Check changed files
+        id: paths
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          set -euo pipefail
+          git fetch origin "$BASE_REF" --depth=1
+          changed=$(git diff --name-only "origin/$BASE_REF" HEAD)
+          [ -n "$changed" ] || exit 0
+          has_submission=0
+          if printf '%s\n' "$changed" | grep -q '^submissions/'; then has_submission=1; fi
+          [ "$has_submission" -eq 0 ] && exit 0
+          bad=0
+          while IFS= read -r file; do
+            case "$file" in
+              submissions/*)
+                if ! printf '%s' "$file" | grep -Eq '^submissions/[a-z]{2,3}(-[a-z0-9]+)*/[A-Za-z0-9_-]+\.json$'; then
+                  echo "Invalid submission path: $file" >&2
+                  bad=1
+                fi
+                ;;
+              *)
+                echo "A submission PR may only change submissions/<lang>/<id>.json: $file" >&2
+                bad=1
+                ;;
+            esac
+          done <<< "$changed"
+          [ "$bad" -eq 0 ]
+          files=$(printf '%s\n' "$changed" | grep -E '^submissions/[a-z]{2,3}(-[a-z0-9]+)*/[A-Za-z0-9_-]+\.json$' || true)
+          {
+            echo 'files<<EOF'
+            printf '%s\n' "$files"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+      - name: Validate changed submissions
+        if: steps.paths.outputs.files != ''
+        env:
+          FILES: ${{ steps.paths.outputs.files }}
+        run: |
+          while IFS= read -r file; do
+            [ -n "$file" ] || continue
+            node tools/bin/check-submission.js "$file"
+          done <<< "$FILES"

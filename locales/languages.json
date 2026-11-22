@@ -2,26 +2,31 @@
   "en": {
     "label": "English",
     "extension": true,
-    "server": true
+    "server": true,
+    "published": true
   },
   "es": {
     "label": "Spanish",
     "extension": true,
-    "server": true
+    "server": true,
+    "published": true
   },
   "fr": {
     "label": "French",
     "extension": true,
-    "server": true
+    "server": true,
+    "published": true
   },
   "ru": {
     "label": "Russian",
     "extension": true,
-    "server": true
+    "server": true,
+    "published": true
   },
   "tr": {
     "label": "Turkish",
     "extension": true,
-    "server": true
+    "server": true,
+    "published": true
   }
 }
