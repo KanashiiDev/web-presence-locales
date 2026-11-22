@@ -6,6 +6,11 @@ on:
   repository_dispatch:
     types: [sync-english-source]
   workflow_dispatch:
+    inputs:
+      cleanup_orphans:
+        description: Remove target keys that no longer exist in the English source
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -40,6 +45,7 @@ jobs:
           # Prefer the commit carried by the dispatch payload; never silently
           # fetch a different upstream HEAD than the one that triggered us.
           SOURCE_SHA: ${{ github.event.client_payload.commit || github.event.client_payload.sha || github.event.client_payload.after || '' }}
+          CLEANUP_ORPHANS: ${{ github.event.client_payload.cleanup_orphans || inputs.cleanup_orphans || false }}
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
@@ -51,11 +57,11 @@ jobs:
             # sync-source.js also removes orphan metadata keys from every
             # language, so check and stage the whole locales tree, not just en.
             # `git diff --quiet` ignores untracked files, so use porcelain.
-            if [ -z "$(git status --porcelain -- locales)" ]; then
+            if [ -z "$(git status --porcelain -- locales runtime/orphan-cleanup)" ]; then
               echo "English mirror and metadata are already current"
               exit 0
             fi
-            git add locales
+            git add locales runtime/orphan-cleanup
             git commit -m "chore: sync English source mirror [skip ci]"
             if git push origin "HEAD:$BRANCH"; then
               exit 0

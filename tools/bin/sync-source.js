@@ -10,11 +10,13 @@
  */
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import fsp from 'node:fs/promises';
 import { fetchGithubSource, readLocalSource } from '../lib/source.js';
-import { localePath, readJsonIfExists, writeIfChanged } from '../lib/fsutil.js';
+import { localePath, readJsonIfExists, writeIfChanged, resolveWithin } from '../lib/fsutil.js';
 import { serializeTranslations } from '../lib/util.js';
 import { ensureHashVersion, serializeMeta } from '../lib/metadata.js';
 import { readLanguages } from '../lib/languages.js';
+import { planOrphanCleanup, applyOrphanCleanup } from '../lib/orphans.js';
 import { NAMESPACES, SOURCE_LANG, SOURCE_REPO, SOURCE_BRANCH, META_FILE } from '../lib/constants.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -37,6 +39,8 @@ if (!token) {
 const upstream = await fetchGithubSource({ token, ref });
 const local = await readLocalSource(root);
 const changed = [];
+const cleanupOrphans = String(process.env.CLEANUP_ORPHANS || '') === 'true';
+const metaOrphansRemoved = [];
 
 for (const ns of NAMESPACES) {
   const file = localePath(root, SOURCE_LANG, `${ns}.json`);
@@ -97,6 +101,7 @@ for (const lang of Object.keys(langs)) {
     for (const key of Object.keys(keys)) {
       if (!(key in sourceKeys)) {
         delete keys[key];
+        metaOrphansRemoved.push({ lang, ns, key });
         metaChanged = true;
       }
     }
@@ -113,10 +118,32 @@ for (const lang of Object.keys(langs)) {
   }
 }
 
+let orphanCleanup = null;
+if (cleanupOrphans) {
+  // Renames and metadata orphans were already handled above. This pass removes
+  // the remaining stale keys from the target files themselves.
+  const plans = await planOrphanCleanup({ root, sourceState: { source: upstream.source }, langs });
+  const reportPath = resolveWithin(root, 'runtime/orphan-cleanup', `${upstream.commit}.json`);
+  orphanCleanup = {
+    sourceCommit: upstream.commit,
+    targetKeys: plans.flatMap((plan) => plan.orphanTargetKeys.map((key) => ({ lang: plan.lang, ns: plan.ns, key }))),
+    metaKeys: metaOrphansRemoved,
+  };
+  if (plans.length) await applyOrphanCleanup({ plans });
+  await fsp.mkdir(path.dirname(reportPath), { recursive: true });
+  if (await writeIfChanged(reportPath, `${JSON.stringify(orphanCleanup, null, 2)}\n`)) {
+    changed.push(`runtime/orphan-cleanup/${upstream.commit}.json`);
+  }
+}
+
 console.log(JSON.stringify({
   mode: 'sync',
   commit: upstream.commit,
   previousCommit: local.commit,
   ref,
   changed,
+  cleanupOrphans,
+  orphanCleanup: orphanCleanup
+    ? { removedFromTargets: orphanCleanup.targetKeys.length, removedFromMeta: orphanCleanup.metaKeys.length }
+    : null,
 }, null, 2));
