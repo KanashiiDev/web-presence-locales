@@ -1,21 +1,10 @@
 {
   "repo": "KanashiiDev/web-presence",
   "branch": "main",
-  "commit": null,
+  "commit": "6a3419d61006c6bac7015c7546d531c97377e54a",
   "blobs": {
-    "extension": "827b5558bf9e3a166dc8939dc40497bc171176cb",
+    "extension": "0f2218ce92b3e305c4510d15cf10eb6e8bfaf399",
     "server": "786c1f36e63699cb0c10d45454aa1e86ddc16f56",
     "shared": "c6ad8ec024fb71d944c5342d35c0c0f1af865495"
-  },
-  "mirrorOnly": true,
-  "upstream": {
-    "commit": "ecdb9390038ae111b6686d3d482f980b2d5ef993",
-    "checkedAt": "2026-11-21T00:00:00.000Z",
-    "blobs": {
-      "extension": "6dc98ed816261e4b1622c60629239618d8abc4ce",
-      "server": "d9b88ca3bf621a0863978d72d63257a02b40dc28",
-      "shared": "720235427ed1816581b6ecd75ef426343d8a2bd8"
-    }
-  },
-  "note": "locales/en is a read-only derived mirror of the main repository. It is never edited by contributions and is refreshed automatically by GitHub Actions. Submissions are always validated against the live authoritative source."
+  }
 }
