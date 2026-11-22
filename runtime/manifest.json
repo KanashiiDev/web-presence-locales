@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "validatorVersion": 1,
-  "snapshot": "1168f18b09ce36c65554c7f039ff782ce7927164",
+  "snapshot": "2be31393c7a1f55602b9657e987ff3920513f5c8",
   "source": {
     "repo": "KanashiiDev/web-presence",
     "commit": "ecdb9390038ae111b6686d3d482f980b2d5ef993",
@@ -20,15 +20,15 @@
       "files": {
         "extension": {
           "sha": "36689c20002575c872b3e6ca9e3d9cc8545618c0",
-          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/1168f18b09ce36c65554c7f039ff782ce7927164/locales/es/extension.json"
+          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/2be31393c7a1f55602b9657e987ff3920513f5c8/locales/es/extension.json"
         },
         "server": {
           "sha": "af420f37d0b39d101033430945ffbebe5f97c9dc",
-          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/1168f18b09ce36c65554c7f039ff782ce7927164/locales/es/server.json"
+          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/2be31393c7a1f55602b9657e987ff3920513f5c8/locales/es/server.json"
         },
         "shared": {
           "sha": "0c8cde2845f3944883346ddfed03425dec846515",
-          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/1168f18b09ce36c65554c7f039ff782ce7927164/locales/es/shared.json"
+          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/2be31393c7a1f55602b9657e987ff3920513f5c8/locales/es/shared.json"
         }
       }
     },
@@ -39,15 +39,15 @@
       "files": {
         "extension": {
           "sha": "1b16c35592e0167618acc98dde6f010de12b9b9f",
-          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/1168f18b09ce36c65554c7f039ff782ce7927164/locales/fr/extension.json"
+          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/2be31393c7a1f55602b9657e987ff3920513f5c8/locales/fr/extension.json"
         },
         "server": {
           "sha": "a23e40c82334dc066ca89cde59097ef8a80d5c8d",
-          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/1168f18b09ce36c65554c7f039ff782ce7927164/locales/fr/server.json"
+          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/2be31393c7a1f55602b9657e987ff3920513f5c8/locales/fr/server.json"
         },
         "shared": {
           "sha": "957cfa41f2a62ee10b2da772d9e5f43782267291",
-          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/1168f18b09ce36c65554c7f039ff782ce7927164/locales/fr/shared.json"
+          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/2be31393c7a1f55602b9657e987ff3920513f5c8/locales/fr/shared.json"
         }
       }
     },
@@ -58,15 +58,15 @@
       "files": {
         "extension": {
           "sha": "cd113a9a59422adb65de7671c36639fc0d2e13cd",
-          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/1168f18b09ce36c65554c7f039ff782ce7927164/locales/ru/extension.json"
+          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/2be31393c7a1f55602b9657e987ff3920513f5c8/locales/ru/extension.json"
         },
         "server": {
           "sha": "9b9655a292c473d2669cd1ec13db81a65a8648cf",
-          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/1168f18b09ce36c65554c7f039ff782ce7927164/locales/ru/server.json"
+          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/2be31393c7a1f55602b9657e987ff3920513f5c8/locales/ru/server.json"
         },
         "shared": {
           "sha": "dbdb63b986223c98c79015aac7a9f3f3949cfdb4",
-          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/1168f18b09ce36c65554c7f039ff782ce7927164/locales/ru/shared.json"
+          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/2be31393c7a1f55602b9657e987ff3920513f5c8/locales/ru/shared.json"
         }
       }
     },
@@ -77,15 +77,15 @@
       "files": {
         "extension": {
           "sha": "1a05573d41a1be805dbf762393844bf5de2b6cad",
-          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/1168f18b09ce36c65554c7f039ff782ce7927164/locales/tr/extension.json"
+          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/2be31393c7a1f55602b9657e987ff3920513f5c8/locales/tr/extension.json"
         },
         "server": {
           "sha": "1fdadc2edf215bec3bd70bb479ee6f0e614fa458",
-          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/1168f18b09ce36c65554c7f039ff782ce7927164/locales/tr/server.json"
+          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/2be31393c7a1f55602b9657e987ff3920513f5c8/locales/tr/server.json"
         },
         "shared": {
           "sha": "f4f8ca30a8caaa5803275f63839cd6252a13bc5c",
-          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/1168f18b09ce36c65554c7f039ff782ce7927164/locales/tr/shared.json"
+          "url": "https://raw.githubusercontent.com/KanashiiDev/web-presence-locales/2be31393c7a1f55602b9657e987ff3920513f5c8/locales/tr/shared.json"
         }
       }
     }
