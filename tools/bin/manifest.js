@@ -16,12 +16,13 @@ import { resolveWithin, writeIfChanged, localePath, readJsonIfExists } from '../
 import { readLanguages } from '../lib/languages.js';
 import { gitBlobSha } from '../lib/hash.js';
 import { computeCoverage, resolvePublished } from '../lib/coverage.js';
+import { resolveSnapshot } from '../lib/manifest-state.js';
 import { localHeadSafe } from '../lib/manifest-util.js';
 import fsp from 'node:fs/promises';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const langs = await readLanguages(root);
-const snapshot = process.env.SNAPSHOT_SHA || localHeadSafe(root);
+const candidateSnapshot = process.env.SNAPSHOT_SHA || localHeadSafe(root);
 const sourceMetaPath = localePath(root, SOURCE_LANG, SOURCE_META_FILE);
 let sourceMeta = null;
 try {
@@ -64,10 +65,8 @@ for (const lang of Object.keys(langs)) {
     if (ns !== 'shared' && langs[lang]?.[ns] !== true) continue;
     const file = localePath(root, lang, `${ns}.json`);
     const text = await fsp.readFile(file, 'utf8');
-    files[ns] = {
-      sha: gitBlobSha(text),
-      url: `${RAW_BASE}/${snapshot}/locales/${lang}/${ns}.json`,
-    };
+    // URLs are added by buildManifest() once the final snapshot is known.
+    files[ns] = { sha: gitBlobSha(text) };
   }
   languages[lang] = {
     label: langs[lang].label,
@@ -77,18 +76,35 @@ for (const lang of Object.keys(langs)) {
   };
 }
 
-const manifest = {
-  schemaVersion: SCHEMA_VERSION,
-  validatorVersion: VALIDATOR_VERSION,
-  snapshot,
-  source: {
-    repo: SOURCE_REPO,
-    commit: sourceMeta?.commit ?? sourceMeta?.upstream?.commit ?? null,
-    mirrorOnly: !sourceMeta?.commit,
-    blobs: sourceMeta?.upstream?.blobs ?? sourceMeta?.blobs ?? {},
-  },
-  languages,
-};
+function buildManifest(snapshot) {
+  return {
+    schemaVersion: SCHEMA_VERSION,
+    validatorVersion: VALIDATOR_VERSION,
+    snapshot,
+    source: {
+      repo: SOURCE_REPO,
+      commit: sourceMeta?.commit ?? sourceMeta?.upstream?.commit ?? null,
+      mirrorOnly: !sourceMeta?.commit,
+      blobs: sourceMeta?.upstream?.blobs ?? sourceMeta?.blobs ?? {},
+    },
+    languages: Object.fromEntries(Object.entries(languages).map(([lang, entry]) => [
+      lang,
+      {
+        ...entry,
+        files: Object.fromEntries(Object.entries(entry.files).map(([ns, file]) => [
+          ns,
+          { ...file, url: `${RAW_BASE}/${snapshot}/locales/${lang}/${ns}.json` },
+        ])),
+      },
+    ])),
+  };
+}
+
+// Keep the committed snapshot when no meaningful content changed; otherwise
+// every workflow run would create a no-op "refresh" commit.
+const provisional = buildManifest(candidateSnapshot);
+const snapshot = resolveSnapshot({ candidate: candidateSnapshot, manifest: provisional, previousManifest });
+const manifest = snapshot === candidateSnapshot ? provisional : buildManifest(snapshot);
 
 const text = `${JSON.stringify(manifest, null, 2)}\n`;
 if (process.argv.includes('--write')) {
