@@ -14,6 +14,8 @@ import fsp from 'node:fs/promises';
 import { fetchGithubSource, readLocalSource } from '../lib/source.js';
 import { localePath, readJsonIfExists, writeIfChanged, resolveWithin } from '../lib/fsutil.js';
 import { serializeTranslations } from '../lib/util.js';
+import { teHashSource } from '../lib/hash.js';
+import { detectSafeRenames, mergeSafeRenames } from '../lib/renames.js';
 import { ensureHashVersion, serializeMeta } from '../lib/metadata.js';
 import { readLanguages } from '../lib/languages.js';
 import { planOrphanCleanup, applyOrphanCleanup } from '../lib/orphans.js';
@@ -38,6 +40,8 @@ if (!token) {
 
 const upstream = await fetchGithubSource({ token, ref });
 const local = await readLocalSource(root);
+// Must be computed before the mirror files below are overwritten.
+const detectedRenames = detectSafeRenames(local.source, upstream.source);
 const changed = [];
 const cleanupOrphans = String(process.env.CLEANUP_ORPHANS || '') === 'true';
 const metaOrphansRemoved = [];
@@ -49,16 +53,16 @@ for (const ns of NAMESPACES) {
 }
 const sourceMetaFile = localePath(root, SOURCE_LANG, '.source.json');
 const existingMeta = await readJsonIfExists(sourceMetaFile);
+const safeRenames = mergeSafeRenames(existingMeta?.safeRenames, detectedRenames);
 const sourceMeta = JSON.stringify({
   repo: SOURCE_REPO,
   branch: process.env.SOURCE_BRANCH || SOURCE_BRANCH,
   commit: upstream.commit,
   blobs: upstream.blobs,
-  ...(existingMeta?.renames ? { renames: existingMeta.renames } : {}),
+  ...(Object.keys(safeRenames).length ? { safeRenames } : {}),
 }, null, 2);
 if (await writeIfChanged(sourceMetaFile, `${sourceMeta}\n`)) changed.push('.source.json');
 
-const renames = existingMeta?.renames || {};
 const langs = await readLanguages(root);
 for (const lang of Object.keys(langs)) {
   if (lang === SOURCE_LANG) continue;
@@ -70,12 +74,13 @@ for (const lang of Object.keys(langs)) {
 
   for (const ns of NAMESPACES) {
     const sourceKeys = upstream.source[ns] || {};
+    const renames = safeRenames[ns] || {};
     const targetPath = localePath(root, lang, `${ns}.json`);
     let target = await readJsonIfExists(targetPath);
     if (target) {
       let targetChanged = false;
       for (const [oldKey, newKey] of Object.entries(renames)) {
-        if (oldKey in target) {
+        if (oldKey in target && !(newKey in target) && newKey in sourceKeys) {
           target[newKey] = target[oldKey];
           delete target[oldKey];
           targetChanged = true;
@@ -92,11 +97,11 @@ for (const lang of Object.keys(langs)) {
     const keys = nsMeta.keys || {};
     let metaChanged = false;
     for (const [oldKey, newKey] of Object.entries(renames)) {
-      if (oldKey in keys) {
-        keys[newKey] = keys[oldKey];
-        delete keys[oldKey];
-        metaChanged = true;
-      }
+      if (!(oldKey in keys) || newKey in keys || !(newKey in sourceKeys)) continue;
+      // The old hash was computed with the old key; recompute it for the new one.
+      keys[newKey] = { ...keys[oldKey], sourceHash: teHashSource(sourceKeys[newKey], newKey) };
+      delete keys[oldKey];
+      metaChanged = true;
     }
     for (const key of Object.keys(keys)) {
       if (!(key in sourceKeys)) {
