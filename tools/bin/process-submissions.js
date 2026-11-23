@@ -47,16 +47,10 @@ async function notifyResults(results, token) {
   const repoPath = process.env.GITHUB_REPOSITORY
     ? `/repos/${process.env.GITHUB_REPOSITORY}`
     : "/repos/KanashiiDev/web-presence-locales";
-  const needsFeedback = new Set([
-    "rejected",
-    "needs-review",
-    "conflict",
-    "partial-conflict",
-    "partial-needs-review",
-    "error",
-  ]);
+  // Every processed submission gets a comment: with result files removed, this
+  // is the only feedback channel the editor has, including for successes.
   for (const result of results) {
-    if (!needsFeedback.has(result.status) && !result.reviewRequired) continue;
+    if (result.status === "skipped" || result.status === "already-processed") continue;
     const marker = `<!-- submission-result:${result.id} -->`;
     const submissionPath = `submissions/${result.lang}/${result.id}.json`;
     try {
@@ -85,6 +79,7 @@ async function notifyResults(results, token) {
         ...(result.staleKeys || []).map((key) => `${key} (source changed)`),
         ...(result.conflictKeys || []).map((key) => `${key} (conflict)`),
       ];
+      const hasIssues = keys.length > 0 || ["rejected", "error"].includes(result.status);
       const body = [
         marker,
         `## Translation submission \`${result.id}\``,
@@ -93,9 +88,11 @@ async function notifyResults(results, token) {
         "",
         keys.length
           ? `Keys not applied:\n${keys.map((key) => `- \`${key}\``).join("\n")}`
-          : "No key-level issues.",
+          : "All submitted keys were applied.",
         "",
-        "Open the translation editor and resubmit the affected keys after reviewing them.",
+        hasIssues
+          ? "Open the translation editor and resubmit the affected keys after reviewing them."
+          : "Thanks for contributing!",
       ].join("\n");
       await githubJson(`${repoPath}/issues/${prNumber}/comments`, {
         token,
