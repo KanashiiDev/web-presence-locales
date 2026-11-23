@@ -5,7 +5,7 @@
 import fsp from 'node:fs/promises';
 import path from 'node:path';
 import {
-  LOCALES_DIR, SUBMISSIONS_DIR, RESULTS_DIR, RESERVED_SUBMISSION_DIRS,
+  LOCALES_DIR, SUBMISSIONS_DIR, RESERVED_SUBMISSION_DIRS,
   META_FILE, SOURCE_LANG, SOURCE_REPO, SOURCE_BRANCH, ID_RE,
 } from './constants.js';
 import {
@@ -13,7 +13,6 @@ import {
 } from './fsutil.js';
 import { readLanguages } from './languages.js';
 import { readLocalSource, fetchGithubSource } from './source.js';
-import { toPlain } from './util.js';
 import { localHead } from './git.js';
 import { localHeadSafe } from './manifest-util.js';
 import { githubJson, githubGraphql, githubFetch } from './http.js';
@@ -55,15 +54,6 @@ export function createLocalAdapter(root) {
     },
     async readMeta(lang) {
       return readJsonIfExists(localePath(root, lang, META_FILE));
-    },
-    async hasProcessed(id) {
-      if (!ID_RE.test(id)) throw new Error('Invalid submission id');
-      try {
-        await fsp.access(resolveWithin(root, RESULTS_DIR, `${id}.json`));
-        return true;
-      } catch {
-        return false;
-      }
     },
     async commit({ files, deletions, message }) {
       for (const { path: rel, content } of files) {
@@ -187,16 +177,6 @@ export function createGitHubAdapter({
       const file = await readFileAt(`${LOCALES_DIR}/${lang}/${META_FILE}`, ref);
       return file ? file.json() : null;
     },
-    async hasProcessed(id) {
-      if (!ID_RE.test(id)) throw new Error('Invalid submission id');
-      try {
-        await githubJson(`${repoPath}/contents/${RESULTS_DIR}/${id}.json?ref=${encodeURIComponent(branch)}`, { token });
-        return true;
-      } catch (err) {
-        if (err.status === 404) return false;
-        throw err;
-      }
-    },
     async commit({ files, deletions, expectedHead, message }) {
       const additions = (files || []).map(({ path: rel, content }) => ({
         path: rel,
@@ -230,18 +210,19 @@ export function createGitHubAdapter({
 
 function isHeadMismatch(err) {
   const text = `${err.message || ''} ${err.type || ''} ${JSON.stringify(err.graphqlErrors || [])}`.toLowerCase();
+  // Prefer stable GraphQL type/code fields; the message text is a fallback for
+  // API versions that only surface the human-readable error.
+  const typed = (err.graphqlErrors || [])
+    .map((entry) => String(entry?.type || entry?.code || '').toLowerCase())
+    .join(' ');
   return text.includes('expectedheadoid')
     || text.includes('expected head')
     || text.includes('not the current head')
     || text.includes('expected branch to point to')
     || text.includes('staledata')
-    || text.includes('stale data');
-}
-
-/** Build the archive document for a processed submission. */
-export function archiveDocument(payload, result) {
-  const submission = typeof payload === 'string' ? { raw: payload } : toPlain(payload);
-  return `${JSON.stringify({ submission, result: toPlain(result) }, null, 2)}\n`;
+    || text.includes('stale data')
+    || typed.includes('expectedheadoid')
+    || typed.includes('staledata');
 }
 
 

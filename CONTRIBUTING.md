@@ -10,7 +10,7 @@ Thanks for helping translate [Web Presence](https://github.com/KanashiiDev/web-p
 - The editor creates one submission file with only the keys you changed, plus the hashes needed to detect source changes and conflicts. You do not need to write these yourself.
 - Open the pull request the editor prepares.
 
-After the PR is merged, CI validates your submission against the live English source, applies safe changes, updates metadata, and writes the outcome to `submissions/results/<id>.json`. If the source changed or someone edited the same key, your change goes to `submissions/review/<lang>/<id>.json` instead - nothing is overwritten.
+After the PR is merged, CI validates your submission against the live English source, applies safe changes, updates metadata, and posts the outcome as a comment on your pull request. If the source changed or someone edited the same key, those keys are skipped and listed in the comment - nothing is overwritten.
 
 You can contribute in any language. The first submission for a new language creates its files and adds it to `locales/languages.json`; missing translations fall back to English.
 

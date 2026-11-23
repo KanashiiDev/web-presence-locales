@@ -43,7 +43,10 @@ const local = await readLocalSource(root);
 // Must be computed before the mirror files below are overwritten.
 const detectedRenames = detectSafeRenames(local.source, upstream.source);
 const changed = [];
-const cleanupOrphans = String(process.env.CLEANUP_ORPHANS || '') === 'true';
+// Orphan cleanup is the default: a stale target key is dead weight and can
+// never be removed through the editor (rows are built from English keys only).
+// Only an explicit `false` opts out.
+const cleanupOrphans = String(process.env.CLEANUP_ORPHANS ?? '') !== 'false';
 const metaOrphansRemoved = [];
 
 for (const ns of NAMESPACES) {

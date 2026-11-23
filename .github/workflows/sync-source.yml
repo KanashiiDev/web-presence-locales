@@ -10,7 +10,7 @@ on:
       cleanup_orphans:
         description: Remove target keys that no longer exist in the English source
         type: boolean
-        default: false
+        default: true
 
 permissions:
   contents: write
@@ -45,7 +45,9 @@ jobs:
           # Prefer the commit carried by the dispatch payload; never silently
           # fetch a different upstream HEAD than the one that triggered us.
           SOURCE_SHA: ${{ github.event.client_payload.commit || github.event.client_payload.sha || github.event.client_payload.after || '' }}
-          CLEANUP_ORPHANS: ${{ github.event.client_payload.cleanup_orphans || inputs.cleanup_orphans || false }}
+          # Empty means "use the script default" (cleanup enabled). Only an
+          # explicit false disables it.
+          CLEANUP_ORPHANS: ${{ github.event.client_payload.cleanup_orphans || inputs.cleanup_orphans || '' }}
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"

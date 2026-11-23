@@ -13,6 +13,10 @@ on:
 
 permissions:
   contents: write
+  # Result comments are the only channel that carries per-key rejection reasons
+  # to the contributor; the editor polls the result file for status only.
+  issues: write
+  pull-requests: write
 
 concurrency:
   group: locale-submission-processing

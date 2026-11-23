@@ -39,9 +39,6 @@ export const META_FILE = '.meta.json';
 export const SOURCE_META_FILE = '.source.json';
 export const LANGUAGES_FILE = 'languages.json';
 export const SUBMISSIONS_DIR = 'submissions';
-export const ARCHIVE_DIR = 'submissions/archive';
-export const RESULTS_DIR = 'submissions/results';
-export const REVIEW_DIR = 'submissions/review';
 /** Directories under submissions/ that are not submission intake folders. */
 export const RESERVED_SUBMISSION_DIRS = new Set(['archive', 'results', 'review']);
 export const RUNTIME_DIR = 'runtime';

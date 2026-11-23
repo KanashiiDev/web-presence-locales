@@ -93,7 +93,7 @@ async function notifyResults(results, token) {
         "",
         keys.length
           ? `Keys not applied:\n${keys.map((key) => `- \`${key}\``).join("\n")}`
-          : "No key-level issues; see the result file for details.",
+          : "No key-level issues.",
         "",
         "Open the translation editor and resubmit the affected keys after reviewing them.",
       ].join("\n");

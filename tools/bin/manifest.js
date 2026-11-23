@@ -10,7 +10,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   NAMESPACES, SOURCE_LANG, SOURCE_REPO, META_FILE,
-  RAW_BASE, VALIDATOR_VERSION, MANIFEST_FILE, SCHEMA_VERSION, SOURCE_META_FILE,
+  RAW_BASE, VALIDATOR_VERSION, MANIFEST_FILE, SCHEMA_VERSION, SOURCE_META_FILE, SHA1_RE,
 } from '../lib/constants.js';
 import { resolveWithin, writeIfChanged, localePath, readJsonIfExists } from '../lib/fsutil.js';
 import { readLanguages } from '../lib/languages.js';
@@ -24,10 +24,18 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const langs = await readLanguages(root);
 const candidateSnapshot = process.env.SNAPSHOT_SHA || localHeadSafe(root);
 const sourceMetaPath = localePath(root, SOURCE_LANG, SOURCE_META_FILE);
-let sourceMeta = null;
+let sourceMeta;
 try {
   sourceMeta = JSON.parse(await fsp.readFile(sourceMetaPath, 'utf8'));
-} catch {
+} catch (err) {
+  throw new Error(`Cannot read ${SOURCE_META_FILE}: ${err.message}. Sync the English source before publishing a manifest.`);
+}
+// The editor and the dashboard server both reject a manifest whose
+// source.commit is not a 40-hex SHA. Publishing one would take every client
+// offline, so fail loudly instead of emitting `mirrorOnly: true`.
+const sourceCommit = sourceMeta?.commit ?? sourceMeta?.upstream?.commit;
+if (!SHA1_RE.test(sourceCommit || '')) {
+  throw new Error(`${SOURCE_META_FILE} has no valid upstream commit; refusing to publish an invalid manifest.`);
 }
 
 const manifestPath = resolveWithin(root, MANIFEST_FILE);
@@ -83,8 +91,8 @@ function buildManifest(snapshot) {
     snapshot,
     source: {
       repo: SOURCE_REPO,
-      commit: sourceMeta?.commit ?? sourceMeta?.upstream?.commit ?? null,
-      mirrorOnly: !sourceMeta?.commit,
+      commit: sourceCommit,
+      mirrorOnly: false,
       blobs: sourceMeta?.upstream?.blobs ?? sourceMeta?.blobs ?? {},
     },
     languages: Object.fromEntries(Object.entries(languages).map(([lang, entry]) => [

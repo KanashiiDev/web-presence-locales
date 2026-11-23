@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   NAMESPACES, LOCALES_DIR, META_FILE, VALIDATOR_VERSION, MANIFEST_FILE, SOURCE_LANG,
+  SHA1_RE, RAW_BASE,
 } from '../lib/constants.js';
 import { readLanguages } from '../lib/languages.js';
 import { readLocalSource } from '../lib/source.js';
@@ -16,6 +17,9 @@ import fsp from 'node:fs/promises';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const writeMetaFlag = process.argv.includes('--write-meta');
+// A plain bootstrap must not silently mark every seeded English copy as an
+// accepted translation. Re-accepting everything requires an explicit flag.
+const acceptAllFlag = process.argv.includes('--accept-all');
 
 const langs = await readLanguages(root);
 const sourceState = await readLocalSource(root);
@@ -33,7 +37,9 @@ if (recordedBlobs) {
     const local = sourceState.blobs[ns];
     const upstream = recordedBlobs[ns];
     if (upstream && upstream !== local) {
-      warn('source-mirror-drift', `source mirror ${ns} differs from recorded upstream ${recordedCommit}; run sync-source`);
+      // The mirror is derived state; drift means the editor's pre-check is
+      // stale and the manifest is about to be published from wrong bytes.
+      report.errors.push(`source mirror ${ns} differs from recorded upstream ${recordedCommit}; source sync is required`);
     }
   }
 }
@@ -74,7 +80,7 @@ for (const lang of Object.keys(langs)) {
   if (!meta && writeMetaFlag) {
     const allTargets = Object.fromEntries(NAMESPACES.map((ns) => [ns, targets[ns] || {}]));
     meta = bootstrapMeta(lang, sourceState.source, allTargets, {
-      commit: sourceState.commit, blobs: sourceState.blobs,
+      commit: sourceState.commit, blobs: sourceState.blobs, acceptAll: acceptAllFlag,
     });
     await writeMeta(root, lang, meta);
     console.log(`[bootstrap] wrote locales/${lang}/${META_FILE}`);
@@ -133,14 +139,34 @@ for (const lang of Object.keys(langs)) {
 
 const manifest = await readJsonIfExists(resolveWithin(root, MANIFEST_FILE));
 if (manifest?.languages) {
-  for (const lang of Object.keys(manifest.languages)) {
-    if (langs[lang]?.published === false) continue;
-    for (const [ns, info] of Object.entries(manifest.languages[lang].files || {})) {
+  // Both consumers (editor and dashboard server) reject the whole manifest on
+  // a malformed entry, so these are errors, not warnings.
+  if (!SHA1_RE.test(manifest.snapshot || '')) {
+    report.errors.push('manifest: snapshot must be a 40-hex SHA');
+  }
+  if (!SHA1_RE.test(manifest.source?.commit || '')) {
+    report.errors.push('manifest: source.commit must be a 40-hex SHA');
+  }
+  for (const [lang, entry] of Object.entries(manifest.languages)) {
+    for (const ns of NAMESPACES) {
+      const info = entry?.files?.[ns];
+      if (!info) {
+        report.errors.push(`manifest: ${lang}/${ns} file entry is missing`);
+        continue;
+      }
+      const expectedUrl = `${RAW_BASE}/${manifest.snapshot}/locales/${lang}/${ns}.json`;
+      if (info.url !== expectedUrl) {
+        report.errors.push(`manifest: ${lang}/${ns} url does not match the snapshot-pinned layout`);
+      }
+      if (!SHA1_RE.test(info.sha || '')) {
+        report.errors.push(`manifest: ${lang}/${ns} sha is not a 40-hex SHA`);
+        continue;
+      }
       const target = await readJsonIfExists(localePath(root, lang, `${ns}.json`));
       if (target === null) continue;
       const text = await fsp.readFile(localePath(root, lang, `${ns}.json`), 'utf8');
       if (gitBlobSha(text) !== info.sha) {
-        warn('manifest-stale', `manifest languages section is stale for ${lang}/${ns}; run manifest.js --write`);
+        warn('manifest-stale', `manifest languages section is stale for ${lang}/${ns}; manifest refresh is required`);
       }
     }
   }

@@ -7,12 +7,13 @@
  * 7. QA (scoped to the patch) 8. safe patch application
  * 9. metadata update       10. atomic commit + auto-merge
  *
- * Every successful run consumes exactly one submission: the original file is
- * deleted and an immutable result + archive entry are written in the same
- * atomic commit. Re-runs are idempotent.
+ * Every run consumes exactly one submission: the original file is deleted in
+ * the same atomic commit that applies the safe keys. The outcome is delivered
+ * as a PR comment, so no result/archive files accumulate and re-runs are
+ * naturally idempotent (the queue entry no longer exists).
  */
 import {
-  NAMESPACES, LOCALES_DIR, LANGUAGES_FILE, LANG_LABELS, RESULTS_DIR, ARCHIVE_DIR, REVIEW_DIR,
+  NAMESPACES, LOCALES_DIR, LANGUAGES_FILE, LANG_LABELS,
   SUBMISSIONS_DIR, META_FILE, LANG_RE, LANG_ALLOWLIST,
 } from './constants.js';
 import { validateSubmission, validatePayloadSize } from './submission.js';
@@ -25,7 +26,7 @@ import { validateTranslation, completionGaps } from './validation.js';
 import { teValidateKey } from './qa.js';
 import { computeCoverage, resolvePublished } from './coverage.js';
 import { serializeTranslations, nowIso } from './util.js';
-import { HeadChangedError, archiveDocument } from './adapters.js';
+import { HeadChangedError } from './adapters.js';
 
 function targetPath(lang, ns) {
   return `${LOCALES_DIR}/${lang}/${ns}.json`;
@@ -33,14 +34,8 @@ function targetPath(lang, ns) {
 function metaPath(lang) {
   return `${LOCALES_DIR}/${lang}/${META_FILE}`;
 }
-function resultPath(id) {
-  return `${RESULTS_DIR}/${id}.json`;
-}
 function submissionRel(lang, id) {
   return `${SUBMISSIONS_DIR}/${lang}/${id}.json`;
-}
-function reviewRel(lang, id) {
-  return `${REVIEW_DIR}/${lang}/${id}.json`;
 }
 
 /** Only a genuine "not found" means the file is absent; everything else throws. */
@@ -166,12 +161,10 @@ async function buildOutcome({ adapter, langs, sourceState, lang, id, expectedHea
     timestamp: nowIso(),
   };
 
-  if (patchResult.status === 'needs-review') {
-    return finalize({
-      adapter, lang, id, payload, result,
-      deletions: [submissionRel(lang, id)], folder: REVIEW_DIR, expectedHead,
-    });
-  }
+  // Every outcome is handled the same way: safe keys are already applied to
+  // `newTarget`, skipped keys are listed in the result, and the immutable
+  // result + archive documents are the only feedback channel. There is no
+  // separate review queue to own or resolve.
 
   const seededTargets = {};
   for (const seedNs of NAMESPACES) seededTargets[seedNs] = sourceState.source[seedNs] || {};
@@ -239,27 +232,15 @@ async function buildOutcome({ adapter, langs, sourceState, lang, id, expectedHea
     files.push({ path: metaPath(lang), content: newMetaText });
   }
 
-  if (result.reviewRequired) {
-    files.push({
-      path: reviewRel(lang, id),
-      content: archiveDocument(payload, {
-        ...result,
-        note: 'Keys listed in conflictKeys/staleKeys were not applied and require manual review.',
-      }),
-    });
-  }
-
-  return finalize({
-    adapter, lang, id, payload,
-    result: {
-      ...result,
-      published,
-      coverage: coverage.coverage,
-      completion: gaps,
-      qa: { warnings: [...qaWarnings.map((entry) => `${entry.key}: ${entry.code}`), ...completionWarnings] },
-    },
-    files, deletions, folder: ARCHIVE_DIR, expectedHead,
-  });
+  const finalResult = {
+    ...result,
+    published,
+    coverage: coverage.coverage,
+    completion: gaps,
+    qa: { warnings: [...qaWarnings.map((entry) => `${entry.key}: ${entry.code}`), ...completionWarnings] },
+  };
+  const commit = await finalize({ adapter, files, deletions, expectedHead, message: `[locale] ${qaStatus} ${lang}/${id}` });
+  return { ...finalResult, commit: commit?.oid || null };
 }
 
 /** Typed result for a submission that was rejected instead of applied. */
@@ -281,20 +262,9 @@ function rejectSubmission({ id, lang, payload, submission, result = {}, reason, 
   });
 }
 
-async function finalize({ adapter, lang, id, payload, result, files = [], deletions = [], folder, expectedHead }) {
-  const archiveRel = `${folder}/${lang}/${id}.json`;
-  const allFiles = [
-    ...files,
-    { path: resultPath(id), content: `${JSON.stringify(result, null, 2)}\n` },
-    { path: archiveRel, content: archiveDocument(payload, result) },
-  ];
-  const commit = await adapter.commit({
-    files: allFiles,
-    deletions,
-    expectedHead,
-    message: `[locale] ${result.status} ${lang}/${id}`,
-  });
-  return { ...result, commit: commit?.oid || null };
+/** Commit the applied files and consume the submission. Nothing else persists. */
+async function finalize({ adapter, files = [], deletions = [], expectedHead, message }) {
+  return adapter.commit({ files, deletions, expectedHead, message });
 }
 
 /** Process all pending submissions. */
@@ -314,25 +284,21 @@ export async function processSubmissions({ adapter, maxHeadRetries = 3 } = {}) {
   for (const { lang, id } of pending) {
     if (!LANG_RE.test(lang) || lang !== lang.toLowerCase()) {
       summary.results.push({ id, lang, status: 'error', reason: 'invalid-submission-directory' });
-      continue;
-    }
-    if (await adapter.hasProcessed(id)) {
-      summary.skipped += 1;
-      summary.results.push({ id, lang, status: 'already-processed' });
+      // Quarantine automatically: leaving the file in place makes every later
+      // run fail forever and requires manual intervention to recover.
       try {
         const head = await adapter.getHead();
         await adapter.commit({
           files: [],
           deletions: [submissionRel(lang, id)],
           expectedHead: head,
-          message: `[locale] cleanup already-processed ${lang}/${id}`,
+          message: `[locale] cleanup invalid-submission-directory ${lang}/${id}`,
         });
       } catch {
-        // ignored
+        // Best effort: a malformed path may be rejected by the storage layer.
       }
       continue;
     }
-
     let done = false;
     for (let attempt = 0; attempt <= maxHeadRetries && !done; attempt += 1) {
       let expectedHead;
@@ -342,16 +308,13 @@ export async function processSubmissions({ adapter, maxHeadRetries = 3 } = {}) {
         let outcome = await buildOutcome({ adapter, langs, sourceState, lang, id, expectedHead });
         if (outcome instanceof RejectedSubmission) {
           const r = outcome;
-          outcome = await finalize({
+          const commit = await finalize({
             adapter,
-            lang,
-            id,
-            payload: r.payload,
-            result: r.result,
             deletions: [submissionRel(lang, id)],
-            folder: ARCHIVE_DIR,
             expectedHead,
+            message: `[locale] rejected ${lang}/${id}`,
           });
+          outcome = { ...r.result, commit: commit?.oid || null };
         }
         summary.results.push(outcome);
         summary.processed += 1;
