@@ -13,7 +13,7 @@
   },
   "namespaces": {
     "extension": {
-      "targetBlobSha": "64e869117e2cb3906ff38deca5f17839fdbc03da",
+      "targetBlobSha": "17c9b79e6665977d0a2062d8108dd40826b345a6",
       "keys": {
         "backup.export": {
           "sourceHash": "4b996e887a0b1f06c4cda9284373fbd9a6456832e24011cc79ae5af40274955e"
@@ -59,6 +59,9 @@
         },
         "button.open_script_manager": {
           "sourceHash": "0b249a0bd6c94f525fc4f066f2fddca5aecb797863f4d8a787fcac5f640bace7"
+        },
+        "button.open_translation_editor": {
+          "sourceHash": "9f291ee4fe35478330a2755a56c9887756edc2c8e40cbcc70a3c3b6c63b70580"
         },
         "button.skip": {
           "sourceHash": "be3291ca6fa1b583aa8e01bbeace074f8defb91519b3837541755c9f7d2cfcd3"
@@ -1428,6 +1431,12 @@
         "translationEditor.conflicts.title": {
           "sourceHash": "c4227fa528dbd45419a677b6fd9b3178b0c772a85cd9db6b3c91f23c95081192"
         },
+        "translationEditor.copySource.failed": {
+          "sourceHash": "27f895f487bb2e83ca15d17c18e5aa0e98dbea54c64cceb3bece4866669d0cee"
+        },
+        "translationEditor.copySource.success": {
+          "sourceHash": "0b074b150e50326a64bde2744cbd3c7b59f6fac52a52a3a71122fe3a7d6bc105"
+        },
         "translationEditor.desc": {
           "sourceHash": "8443f2ef901eb4f59367b0ad13b2b1bb3dfa7500269ab71b88b6be6a56ef6557"
         },
@@ -1596,6 +1605,24 @@
         "translationEditor.error.invalidJson": {
           "sourceHash": "00a234dd7e67d9ccd0f255d22d0afc4835368cc027136b6510e6397c27c4c8ad"
         },
+        "translationEditor.error.invalidManifest": {
+          "sourceHash": "8a5e1478b745a2cd33d71cb65f9e60d33a4e5e65f226bc98050ce4e007fe8f7e"
+        },
+        "translationEditor.error.shaMismatch": {
+          "sourceHash": "2cebb900db4599e599eed1e575b806c87b60eed8fdf958f0aacccfbc66f55b8b"
+        },
+        "translationEditor.error.unsupportedHashVersion": {
+          "sourceHash": "148fe9fd6bda1e2c5562d6509aeefb008ac5377de3a67e04c919415230357a9b"
+        },
+        "translationEditor.exportDrafts": {
+          "sourceHash": "9275fc21fbfa97eefd09f372e7ef78ed0e1f5e43cf984960cc0f805a2cefc31f"
+        },
+        "translationEditor.exportLocale": {
+          "sourceHash": "191ef0816a2858cdb2c3bcadf47b9ca743fc897467ee766d31a392565a09b417"
+        },
+        "translationEditor.exportedDrafts": {
+          "sourceHash": "9022644a55349f111566416857ba9a60748155757a74a0e6fb8c0cd2d9fa35b6"
+        },
         "translationEditor.file": {
           "sourceHash": "96cf540f6200b4b20593bd412e06af8beac8111c91fa304e2c18acb8deb06832"
         },
@@ -1614,11 +1641,38 @@
         "translationEditor.filter.untranslated": {
           "sourceHash": "b9f76ade8879128c9f2d99c791e124142eb55a8b6f04089e3485828d8ea92763"
         },
+        "translationEditor.importDrafts": {
+          "sourceHash": "40eca36087278c6db6fb8bb46a50f0574b2855e71503a716f904fa87c5bd89f9"
+        },
+        "translationEditor.importLocale": {
+          "sourceHash": "559409a98c46052911338a9093e7b23efdca7b0bf4b891082aaea5bd5e1416a5"
+        },
+        "translationEditor.importModal.accepted": {
+          "sourceHash": "8b7773d69e30d450337ee15c61c8c3c8c78d5d030a36e96eb9ef34a592a23b15"
+        },
+        "translationEditor.importModal.confirm": {
+          "sourceHash": "08cf581ebd11d7dfea686e5ed75ce2c28a8239bbc492d0447d617eee122639a4"
+        },
+        "translationEditor.importModal.invalidFile": {
+          "sourceHash": "4f3acfe8f2c63a88c9e84b29067cc9830dceae20cfdea864fdbff5792eae24b8"
+        },
+        "translationEditor.importModal.nothingToImport": {
+          "sourceHash": "5e13fd58da7402e2ffdc63cafb418892a475b284a9a51d09496b8ba8d4dfa583"
+        },
+        "translationEditor.importModal.rejected": {
+          "sourceHash": "e756240ac1d3a42c020e03ea11fc4e554b5c6236fbb035a4266789dcb553ae16"
+        },
+        "translationEditor.importModal.title": {
+          "sourceHash": "556007aa8a6d85eab8ce7d959ddd902f8ede0d8b16ed20af415e7911a2be59dd"
+        },
         "translationEditor.key": {
           "sourceHash": "3b3a854456c85034b8e28de52c060a8613273c033e998df4009dd56139e4f647"
         },
         "translationEditor.language": {
           "sourceHash": "1937c61481086acd34263e26b8189f923ecd018261088d60f406bb0d9c8909cb"
+        },
+        "translationEditor.language.unpublished": {
+          "sourceHash": "f096f470ce74f3959e4eb05985bd3cec228519276e2b4e0bbc3ff9fb56a66e05"
         },
         "translationEditor.languagesError": {
           "sourceHash": "616cb3a480cfa3f5b47af57fb9ffdf7b2dca6ffbfe675b150c5573aaf7d1d94d"
@@ -1713,6 +1767,9 @@
         "translationEditor.qa.tokenMissing": {
           "sourceHash": "3c9d965977ada297e7254922e36645715935236149613fe4f432f378a0c42922"
         },
+        "translationEditor.qa.unverified": {
+          "sourceHash": "441b2976d961dabab154823db25873fc2cc8f87f48fcf82a8943dfd718fabd0d"
+        },
         "translationEditor.qa.value": {
           "sourceHash": "e9397ff17c395ef18032eb3f909b0d799681df3346e69617c498ea305fc10c1f"
         },
@@ -1800,8 +1857,14 @@
         "translationEditor.submit": {
           "sourceHash": "702aff3e67ab19f6d16d9ebe79aa94cb543396b93183adfefbcbc46c9913f853"
         },
+        "translationEditor.submitModal.checking": {
+          "sourceHash": "e56ac36fbff747455a345fca147e151587bc524cec76cbf7e591b7161e280023"
+        },
         "translationEditor.submitModal.confirm": {
           "sourceHash": "4a93755ae186f44475b202230257744d0775d14b9b3bccae56e932e8f40e4dc3"
+        },
+        "translationEditor.submitModal.confirmPassing": {
+          "sourceHash": "b332727cb18ff6a66b0a48eb16b756137a7cc4271f289a820f0aa43b5e5990e9"
         },
         "translationEditor.submitModal.connect": {
           "sourceHash": "bc227426e18a004729d17b3d351ce7e865b1ce6efdf0e5b482d77916029562b6"
@@ -1833,8 +1896,17 @@
         "translationEditor.submitModal.noLanguageChanges": {
           "sourceHash": "aebfec0da77eb1c89df53220665692a38c6a67e6908a7727463e7a3b0c4374bb"
         },
+        "translationEditor.submitModal.notPublished": {
+          "sourceHash": "705ddbae919ca1b33d4b565ac49c108a98e122f7dfbc819c5ddc417e3225f490"
+        },
+        "translationEditor.submitModal.partialSummary": {
+          "sourceHash": "5071e749b162f622363e129a72492a4a944a74615ede7de851437b21c8d71d78"
+        },
         "translationEditor.submitModal.pendingConflict": {
           "sourceHash": "09b3015af251316b1b3d326cfd5b315cefee1480a0e4244c460dd80ac5e9e712"
+        },
+        "translationEditor.submitModal.processing": {
+          "sourceHash": "1dbaa03038d30ae03189dc00351b1740933c25c49ef09bd496f501198bcde4e6"
         },
         "translationEditor.submitModal.showKeys": {
           "sourceHash": "cf2be6a377ef8e0fc9a51d9bd227fb5600952639aee1d572480af664126e05e8"
@@ -1851,6 +1923,9 @@
         "translationEditor.submitModal.updated": {
           "sourceHash": "048728ba0883af1f3fc9c384f74caf6c7d64bf37ad48a933acec19c07cae7b1a"
         },
+        "translationEditor.submitModal.waitingForResult": {
+          "sourceHash": "d3fdac21927252ce270757a545c42e2134a519d7e81151f7b8db8c4d58b2a50a"
+        },
         "translationEditor.submitModal.warnings": {
           "sourceHash": "5fb11129d91c43235d46015e9cac54a5d57b7a7fac6464277f2b3a2813905e50"
         },
@@ -1863,17 +1938,32 @@
         "translationEditor.title": {
           "sourceHash": "6161d50f55bac7c0a77c940797083687e94ae2bee2a8470cca948ff6cabdfc4e"
         },
+        "translationEditor.validation.controlCharacter": {
+          "sourceHash": "d674e9201257c364489965cb2fc61cdd8a124cbd23698948b60fecd1db176da4"
+        },
         "translationEditor.validation.emptyTranslation": {
           "sourceHash": "656c54d4e8707a1c794b5ccf112d3d27a566e8b607776068cbfa3eac88a56baf"
         },
         "translationEditor.validation.missingKey": {
           "sourceHash": "fedce0969b535d5efae333f74435c9d438acd0efb45984d35830d308491244a4"
         },
+        "translationEditor.validation.nonString": {
+          "sourceHash": "3a9278257170fa7ee316c3cb749f53419df0f61c2a9dbbb3ee222aa84a90d703"
+        },
         "translationEditor.validation.placeholderMissing": {
           "sourceHash": "5a8840ce6416375f7c3e0efae5be9b437b215d7815eb419128bddbec16b8a995"
         },
         "translationEditor.validation.placeholderNotInSource": {
           "sourceHash": "a450d2c967ae48ffa15ee523ec3586024e60471a993151d4c102c6c85d43a223"
+        },
+        "translationEditor.validation.sameAsSource": {
+          "sourceHash": "3852c8f6dc8433ad7daea32d632ca573ddf52dcb4d86561dfde08c5b0bdcf2d9"
+        },
+        "translationEditor.validation.unsafeKey": {
+          "sourceHash": "6c79b83afe305ea19469c904f490428f6745a30ca9c6287042d2ff9ad5dedb37"
+        },
+        "translationEditor.validation.unsafeValue": {
+          "sourceHash": "bbc41201e140d7f11f1c06aaa22af439ab0315052536e39b2fcd3de61cccb051"
         },
         "tutorial.finish": {
           "sourceHash": "f6d133ea1622c7251542d34f6c8f30b84195d78ed3d406b77ee60a00106d4289"
@@ -2434,7 +2524,7 @@
           "sourceHash": "80b451ca1d7d74ccb941cd32179081fe8a0872d797107b27410fb93370bdc15f"
         },
         "userscript.iframeSelectors.error.missingFields": {
-          "sourceHash": "1b47ced4e3fcab9f12e2c4eeda37f6ec832f502323101fbd24e610f9cf6928f2"
+          "sourceHash": "9f351a1815faa096163267c14f82b418358e7a62a664a301a35e8aa4e714ee7d"
         },
         "userscript.iframeSelectors.fieldTypes": {
           "sourceHash": "95bae0338d4a1400f901a9f6a176b584c226485306b0f88170f254c752d5b023"
