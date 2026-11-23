@@ -798,7 +798,6 @@
   "translationEditor.submitModal.noChanges": "No hay cambios para enviar.",
   "translationEditor.submitModal.noLanguageChanges": "No hay traducciones para enviar en este idioma.",
   "translationEditor.submitModal.pendingConflict": "{key}: también pendiente en otro PR abierto",
-  "translationEditor.validation.extraKey": "Clave extra que no está en la fuente: {key}",
   "translationEditor.validation.missingKey": "Falta la clave, se usará el inglés: {key}",
   "translationEditor.validation.placeholderNotInSource": "{key}: el marcador {name} no existe en la fuente",
   "translationEditor.validation.placeholderMissing": "{key}: falta el marcador {name}",

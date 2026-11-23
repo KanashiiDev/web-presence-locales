@@ -798,7 +798,6 @@
   "translationEditor.submitModal.noChanges": "Нет изменений для отправки.",
   "translationEditor.submitModal.noLanguageChanges": "Для этого языка нет переводов для отправки.",
   "translationEditor.submitModal.pendingConflict": "{key}: также ожидает в другом открытом PR",
-  "translationEditor.validation.extraKey": "Лишний ключ, отсутствующий в источнике: {key}",
   "translationEditor.validation.missingKey": "Отсутствующий ключ, используется английский: {key}",
   "translationEditor.validation.placeholderNotInSource": "{key}: плейсхолдер {name} отсутствует в источнике",
   "translationEditor.validation.placeholderMissing": "{key}: отсутствует плейсхолдер {name}",

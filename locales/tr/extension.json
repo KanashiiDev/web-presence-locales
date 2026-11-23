@@ -798,7 +798,6 @@
   "translationEditor.submitModal.noChanges": "Gönderilecek değişiklik yok.",
   "translationEditor.submitModal.noLanguageChanges": "Bu dil için gönderilecek çeviri yok.",
   "translationEditor.submitModal.pendingConflict": "{key}: başka bir açık PR'da da bekliyor",
-  "translationEditor.validation.extraKey": "Kaynakta olmayan fazla anahtar: {key}",
   "translationEditor.validation.missingKey": "Eksik anahtar, İngilizce fallback kullanılacak: {key}",
   "translationEditor.validation.placeholderNotInSource": "{key}: {name} yer tutucusu kaynakta yok",
   "translationEditor.validation.placeholderMissing": "{key}: {name} yer tutucusu eksik",

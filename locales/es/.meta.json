@@ -4,16 +4,16 @@
   "lang": "es",
   "source": {
     "repo": "KanashiiDev/web-presence",
-    "commit": null,
+    "commit": "c7df00f303d989f70116f33e3e2658833428b452",
     "blobs": {
-      "extension": "827b5558bf9e3a166dc8939dc40497bc171176cb",
+      "extension": "6e761eb6b96967d5ef593f9dc443dd91aeb7e3b0",
       "server": "786c1f36e63699cb0c10d45454aa1e86ddc16f56",
       "shared": "c6ad8ec024fb71d944c5342d35c0c0f1af865495"
     }
   },
   "namespaces": {
     "extension": {
-      "targetBlobSha": "36689c20002575c872b3e6ca9e3d9cc8545618c0",
+      "targetBlobSha": "4449131ba60689e46e44f4ed6131fba9669f1ad1",
       "keys": {
         "backup.export": {
           "sourceHash": "4b996e887a0b1f06c4cda9284373fbd9a6456832e24011cc79ae5af40274955e"
@@ -1865,9 +1865,6 @@
         },
         "translationEditor.validation.emptyTranslation": {
           "sourceHash": "656c54d4e8707a1c794b5ccf112d3d27a566e8b607776068cbfa3eac88a56baf"
-        },
-        "translationEditor.validation.extraKey": {
-          "sourceHash": "ab2cb68de4e7fd052ef1be8744f282e6b8383a19dd97ab784e176de6cc7a6b60"
         },
         "translationEditor.validation.missingKey": {
           "sourceHash": "fedce0969b535d5efae333f74435c9d438acd0efb45984d35830d308491244a4"
