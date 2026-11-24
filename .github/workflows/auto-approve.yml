@@ -1,0 +1,118 @@
+name: Auto-approve validated submissions
+
+# Submission PRs are opened by the translation editor from a fork. The review
+# therefore runs in the base-repo context via `workflow_run`: never add an
+# approval step to `validate.yml`, which executes with the PR's (untrusted)
+# workflow file and a read-only token.
+#
+# Requires the repository setting
+# "Settings > Actions > General > Workflow permissions > Allow GitHub Actions
+# to create and approve pull requests" to be enabled. GITHUB_TOKEN acts as
+# github-actions[bot], so it can approve PRs opened by the repository owner.
+
+on:
+  workflow_run:
+    workflows: ["Validate locale data"]
+    types: [completed]
+
+permissions:
+  contents: read
+  checks: read
+  pull-requests: write
+
+concurrency:
+  group: auto-approve-${{ github.event.workflow_run.head_sha }}
+  cancel-in-progress: false
+
+jobs:
+  approve:
+    name: Approve when all checks pass
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Approve the pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          event=$(cat "$GITHUB_EVENT_PATH")
+          sha=$(jq -r '.workflow_run.head_sha' <<<"$event")
+          pr=$(jq -r '.workflow_run.pull_requests[0].number // empty' <<<"$event")
+
+          # Fork PRs are not always attached to the workflow_run payload.
+          if [ -z "$pr" ]; then
+            pr=$(gh api "/repos/$REPO/commits/$sha/pulls" --jq '.[0].number // empty')
+          fi
+          if [ -z "$pr" ]; then
+            echo "No pull request found for $sha - skipping."
+            exit 0
+          fi
+
+          details=$(gh api "/repos/$REPO/pulls/$pr")
+          state=$(jq -r '.state' <<<"$details")
+          draft=$(jq -r '.draft' <<<"$details")
+          head_sha=$(jq -r '.head.sha' <<<"$details")
+          author=$(jq -r '.user.login' <<<"$details")
+          bot=$(gh api /user --jq '.login')
+
+          skip() {
+            echo "$1 Skipping approval of PR #$pr."
+            exit 0
+          }
+
+          [ "$state" = "open" ] || skip "PR is $state."
+          [ "$draft" = "false" ] || skip "PR is a draft."
+          # The run may have finished after a newer commit was pushed.
+          [ "$head_sha" = "$sha" ] || skip "Head moved from $sha to $head_sha."
+          [ "$author" != "$bot" ] || skip "Author ($author) is the approving identity."
+
+          # Mirror the path guard in validate.yml: only immutable submission
+          # files are eligible for automatic approval.
+          files=$(gh api --paginate "/repos/$REPO/pulls/$pr/files?per_page=100" | jq -r '.[].filename')
+          while IFS= read -r file; do
+            [ -n "$file" ] || continue
+            if ! printf '%s' "$file" | grep -Eq '^submissions/[a-z]{2,3}(-[a-z0-9]+)*/[A-Za-z0-9_-]+\.json$'; then
+              skip "PR changes a non-submission file: $file"
+            fi
+          done <<<"$files"
+
+          # Every check run on the current head must be finished and green.
+          checks=$(gh api --paginate "/repos/$REPO/commits/$sha/check-runs?per_page=100" \
+            | jq -r '.check_runs[] | [.status, (.conclusion // ""), .name] | @tsv')
+          [ -n "$checks" ] || skip "No check runs found for $sha."
+          while IFS=$'\t' read -r status conclusion name; do
+            [ -n "$status" ] || continue
+            if [ "$status" != "completed" ]; then skip "Check '$name' is $status."; fi
+            case "$conclusion" in
+              success|neutral|skipped) ;;
+              *) skip "Check '$name' concluded with $conclusion." ;;
+            esac
+          done <<<"$checks"
+
+          # Legacy commit statuses, when present.
+          read -r combined count <<<"$(gh api "/repos/$REPO/commits/$sha/status" \
+            --jq '.state + " " + (.statuses | length | tostring)')"
+          if [ "$count" -gt 0 ] && [ "$combined" != "success" ]; then
+            skip "Combined commit status is $combined."
+          fi
+
+          # An existing approval from the same identity cannot be duplicated.
+          existing=$(gh api --paginate "/repos/$REPO/pulls/$pr/reviews?per_page=100" \
+            | jq -s -r --arg bot "$bot" '[.[] | .[] | select(.user.login == $bot and .state == "APPROVED")] | length')
+          if [ "$existing" -gt 0 ]; then
+            skip "PR is already approved by $bot."
+          fi
+
+          if ! gh api --method POST "/repos/$REPO/pulls/$pr/reviews" \
+              -f event=APPROVE \
+              -f body="Auto-approved: all checks passed on $sha. Only submission files changed." \
+              >/dev/null; then
+            echo "::error::Could not approve PR #$pr as $bot. Check 'Allow GitHub Actions to create and approve pull requests' under Settings > Actions > General and the pull-requests: write permission."
+            exit 1
+          fi
+          echo "Approved PR #$pr as $bot."
