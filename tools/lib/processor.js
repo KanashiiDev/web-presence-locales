@@ -116,7 +116,7 @@ async function buildOutcome({ adapter, langs, sourceState, lang, id, expectedHea
   currentMeta = migrated.meta;
 
   const sourceFreshness = checkSubmissionSourceFreshness({ submission, source: { [ns]: nsSource } });
-  const patchResult = applySubmission({ submission, currentTarget, source: { [ns]: nsSource }, sourceFreshness });
+  const patchResult = applySubmission({ submission, currentTarget, source: { [ns]: nsSource }, sourceFreshness, isNewTarget });
 
   const accepted = [...patchResult.acceptedKeys];
   const newTarget = { ...patchResult.newTarget };
@@ -197,9 +197,14 @@ async function buildOutcome({ adapter, langs, sourceState, lang, id, expectedHea
   if (gaps.missingKeys.length) completionWarnings.push(`${gaps.missingKeys.length} key(s) not yet translated`);
   if (gaps.extraKeys.length) completionWarnings.push(`${gaps.extraKeys.length} orphan key(s) not in the English source`);
 
+  // A brand-new language with zero accepted keys must not be bootstrapped from
+  // the English source: that would publish an English file that looks like a
+  // finished translation. Consume the submission and report the result, but
+  // leave the language unbootstrapped until a submission actually applies.
+  const skipSeed = isNewTarget && accepted.length === 0;
   const files = [];
   const deletions = [submissionRel(lang, id)];
-  if (isNewTarget) {
+  if (isNewTarget && !skipSeed) {
     for (const seedNs of NAMESPACES) {
       files.push({
         path: targetPath(lang, seedNs),
@@ -221,14 +226,14 @@ async function buildOutcome({ adapter, langs, sourceState, lang, id, expectedHea
     previousPublished: previousEntry?.published === true,
     override: previousEntry?.published === false ? false : undefined,
   });
-  if (!previousEntry) {
+  if (!previousEntry && !skipSeed) {
     langs[lang] = { label: LANG_LABELS[lang] || lang, extension: true, server: true };
     files.push({ path: `${LOCALES_DIR}/${LANGUAGES_FILE}`, content: serializeLanguages(langs) });
   }
 
   const currentMetaText = currentMeta ? serializeMeta(currentMeta) : '';
   const newMetaText = serializeMeta(newMeta);
-  if (newMetaText !== currentMetaText) {
+  if (newMetaText !== currentMetaText && !skipSeed) {
     files.push({ path: metaPath(lang), content: newMetaText });
   }
 

@@ -14,9 +14,15 @@ import { teHashTarget } from './hash.js';
 import { deepClone, safeAssign, sortedKeys } from './util.js';
 import { checkSubmissionSourceFreshness } from './freshness.js';
 
-export function compareKey(currentValue, change, key) {
+export function compareKey(currentValue, change, key, allowEmptyBase = false) {
   const currentTargetHash = teHashTarget(currentValue, key);
   if (currentTargetHash === change.baseTargetHash) return { action: 'apply', currentTargetHash };
+  // Older editor versions hashed an empty base for brand-new languages while
+  // the processor seeds the target from English. Accept that legacy base only
+  // on a genuinely new target file, never on an existing translation.
+  if (allowEmptyBase && change.baseTargetHash === teHashTarget('', key)) {
+    return { action: 'apply', currentTargetHash };
+  }
   if (currentValue === change.value) return { action: 'already-applied', currentTargetHash };
   return { action: 'conflict', currentTargetHash };
 }
@@ -34,7 +40,7 @@ export function compareKey(currentValue, change, key) {
  *   sourceFreshness: object
  * }}
  */
-export function applySubmission({ submission, currentTarget, source, sourceFreshness }) {
+export function applySubmission({ submission, currentTarget, source, sourceFreshness, isNewTarget = false }) {
   const freshness = sourceFreshness || checkSubmissionSourceFreshness({ submission, source });
   const nsSource = source[submission.ns] || {};
   const newTarget = deepClone(currentTarget);
@@ -53,7 +59,7 @@ export function applySubmission({ submission, currentTarget, source, sourceFresh
     }
 
     const currentValue = key in currentTarget ? currentTarget[key] : '';
-    const comparison = compareKey(currentValue, change, key);
+    const comparison = compareKey(currentValue, change, key, isNewTarget);
     results[key] = comparison;
 
     if (comparison.action === 'apply') {
