@@ -1,4 +1,9 @@
 {
+  "de": {
+    "label": "German",
+    "extension": true,
+    "server": true
+  },
   "en": {
     "label": "English",
     "extension": true,
