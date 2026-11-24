@@ -17,6 +17,11 @@
     "server": true,
     "published": true
   },
+  "it": {
+    "label": "Italian",
+    "extension": true,
+    "server": true
+  },
   "pt-br": {
     "label": "Brazilian Portuguese",
     "extension": true,
