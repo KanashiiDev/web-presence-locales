@@ -29,10 +29,7 @@ if (process.env.GITHUB_STEP_SUMMARY) {
     "",
     "| Submission | Language | Status | Reason |",
     "|---|---|---|---|",
-    ...summary.results.map(
-      (r) =>
-        `| ${cell(r.id)} | ${cell(r.lang)} | ${cell(r.status)} | ${cell(r.reason || r.message)} |`,
-    ),
+    ...summary.results.map((r) => `| ${cell(r.id)} | ${cell(r.lang)} | ${cell(r.status)} | ${cell(r.reason || r.message)} |`),
     "",
   ];
   await fs.appendFile(process.env.GITHUB_STEP_SUMMARY, lines.join("\n"));
@@ -43,10 +40,8 @@ if (process.env.GITHUB_STEP_SUMMARY) {
  * after processing, so a PR comment is the only feedback channel. Failures here
  * are logged but never break the processing job.
  */
-async function notifyResults(results, token) {
-  const repoPath = process.env.GITHUB_REPOSITORY
-    ? `/repos/${process.env.GITHUB_REPOSITORY}`
-    : "/repos/KanashiiDev/web-presence-locales";
+async function notifyResults(results, token, prNumberOverride) {
+  const repoPath = process.env.GITHUB_REPOSITORY ? `/repos/${process.env.GITHUB_REPOSITORY}` : "/repos/KanashiiDev/web-presence-locales";
   // Every processed submission gets a comment: with result files removed, this
   // is the only feedback channel the editor has, including for successes.
   for (const result of results) {
@@ -54,28 +49,19 @@ async function notifyResults(results, token) {
     const marker = `<!-- submission-result:${result.id} -->`;
     const submissionPath = `submissions/${result.lang}/${result.id}.json`;
     try {
-      const commits = await githubJson(
-        `${repoPath}/commits?path=${encodeURIComponent(submissionPath)}&per_page=10`,
-        { token },
-      );
-      const prNumber = commits
-        .map((entry) => /(?:^|\s)#(\d+)\b/.exec(entry?.commit?.message || ""))
-        .filter(Boolean)
-        .map((match) => Number(match[1]))
-        .find(Boolean);
+      const commits = await githubJson(`${repoPath}/commits?path=${encodeURIComponent(submissionPath)}&per_page=10`, { token });
+      const prNumber =
+        Number(prNumberOverride) ||
+        commits
+          .map((entry) => /#(\d+)\b/.exec(entry?.commit?.message || ""))
+          .filter(Boolean)
+          .map((match) => Number(match[1]))
+          .find(Boolean);
       if (!prNumber) continue;
-      const comments = await githubJson(
-        `${repoPath}/issues/${prNumber}/comments?per_page=100`,
-        { token },
-      );
-      if (
-        comments.some((comment) => String(comment.body || "").includes(marker))
-      )
-        continue;
+      const comments = await githubJson(`${repoPath}/issues/${prNumber}/comments?per_page=100`, { token });
+      if (comments.some((comment) => String(comment.body || "").includes(marker))) continue;
       const keys = [
-        ...(result.qaDroppedKeys || []).map(
-          (entry) => `${entry.key} (${entry.codes.join(", ")})`,
-        ),
+        ...(result.qaDroppedKeys || []).map((entry) => `${entry.key} (${entry.codes.join(", ")})`),
         ...(result.staleKeys || []).map((key) => `${key} (source changed)`),
         ...(result.conflictKeys || []).map((key) => `${key} (conflict)`),
       ];
@@ -86,13 +72,9 @@ async function notifyResults(results, token) {
         "",
         `Status: **${result.status}**${result.reason ? ` — ${result.reason}` : ""}`,
         "",
-        keys.length
-          ? `Keys not applied:\n${keys.map((key) => `- \`${key}\``).join("\n")}`
-          : "All submitted keys were applied.",
+        keys.length ? `Keys not applied:\n${keys.map((key) => `- \`${key}\``).join("\n")}` : "All submitted keys were applied.",
         "",
-        hasIssues
-          ? "Open the translation editor and resubmit the affected keys after reviewing them."
-          : "Thanks for contributing!",
+        hasIssues ? "Open the translation editor and resubmit the affected keys after reviewing them." : "Thanks for contributing!",
       ].join("\n");
       await githubJson(`${repoPath}/issues/${prNumber}/comments`, {
         token,
@@ -107,7 +89,7 @@ async function notifyResults(results, token) {
 
 if (process.env.GITHUB_TOKEN && process.env.NOTIFY_RESULTS !== "false") {
   try {
-    await notifyResults(summary.results, process.env.GITHUB_TOKEN);
+    await notifyResults(summary.results, process.env.GITHUB_TOKEN, process.env.PR_NUMBER);
   } catch (err) {
     console.warn(`Result notification failed: ${err.message}`);
   }

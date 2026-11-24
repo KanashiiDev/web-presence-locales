@@ -107,7 +107,7 @@ jobs:
           # starts other workflows, so dispatch the submission processor here.
           # workflow_dispatch is one of the events GITHUB_TOKEN can trigger.
           dispatch=$(mktemp)
-          if ! gh workflow run process-submission.yml --repo "$REPO" --ref main >"$dispatch" 2>&1; then
+          if ! gh workflow run process-submission.yml --repo "$REPO" --ref main -f pr_number="$pr" >"$dispatch" 2>&1; then
             echo "::error::Could not dispatch process-submission.yml. API said: $(cat "$dispatch")"
             echo "Check actions: write permission."
             exit 1

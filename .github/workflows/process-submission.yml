@@ -6,6 +6,11 @@ name: Process translation submissions
 # concurrent contributions from overwriting each other.
 on:
   workflow_dispatch:
+    inputs:
+      pr_number:
+        description: PR number to post result comments to
+        required: false
+        type: string
   push:
     branches: [main]
     paths:
@@ -42,6 +47,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           SOURCE_REPO: KanashiiDev/web-presence
+          PR_NUMBER: ${{ inputs.pr_number || github.event.inputs.pr_number || '' }}
         run: node tools/bin/process-submissions.js
 
       # Commits made with github.token do NOT trigger other workflows. Without
