@@ -1,14 +1,10 @@
-name: Auto-approve validated submissions
+name: Merge validated submissions
 
-# Submission PRs are opened by the translation editor from a fork. The review
-# therefore runs in the base-repo context via `workflow_run`: never add an
-# approval step to `validate.yml`, which executes with the PR's (untrusted)
-# workflow file and a read-only token.
-#
-# Requires the repository setting
-# "Settings > Actions > General > Workflow permissions > Allow GitHub Actions
-# to create and approve pull requests" to be enabled. GITHUB_TOKEN acts as
-# github-actions[bot], so it can approve PRs opened by the repository owner.
+# Submission PRs are opened by the translation editor. This workflow runs in the
+# base-repo context via `workflow_run` so the token is never exposed to the PR's
+# (untrusted) code. When validation passes the workflow merges the PR directly;
+# it does not rely on GitHub's auto-merge queue or any PAT. The head commit is
+# pinned so a newer push cannot be merged by a stale run.
 
 on:
   workflow_run:
@@ -16,24 +12,24 @@ on:
     types: [completed]
 
 permissions:
-  contents: read
+  contents: write
   checks: read
   pull-requests: write
 
 concurrency:
-  group: auto-approve-${{ github.event.workflow_run.head_sha }}
+  group: merge-${{ github.event.workflow_run.head_sha }}
   cancel-in-progress: false
 
 jobs:
-  approve:
-    name: Approve when all checks pass
+  merge:
+    name: Merge when all checks pass
     if: >-
       github.event.workflow_run.conclusion == 'success' &&
       github.event.workflow_run.event == 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Approve the pull request
+      - name: Merge the pull request
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
@@ -57,11 +53,9 @@ jobs:
           state=$(jq -r '.state' <<<"$details")
           draft=$(jq -r '.draft' <<<"$details")
           head_sha=$(jq -r '.head.sha' <<<"$details")
-          author=$(jq -r '.user.login' <<<"$details")
-          bot=$(gh api /user --jq '.login')
 
           skip() {
-            echo "$1 Skipping approval of PR #$pr."
+            echo "$1 Skipping merge for PR #$pr."
             exit 0
           }
 
@@ -69,10 +63,9 @@ jobs:
           [ "$draft" = "false" ] || skip "PR is a draft."
           # The run may have finished after a newer commit was pushed.
           [ "$head_sha" = "$sha" ] || skip "Head moved from $sha to $head_sha."
-          [ "$author" != "$bot" ] || skip "Author ($author) is the approving identity."
 
-          # Mirror the path guard in validate.yml: only immutable submission
-          # files are eligible for automatic approval.
+          # Mirror the path guard in validate.yml: only submission-only PRs are
+          # eligible for automatic merging.
           files=$(gh api --paginate "/repos/$REPO/pulls/$pr/files?per_page=100" | jq -r '.[].filename')
           while IFS= read -r file; do
             [ -n "$file" ] || continue
@@ -101,18 +94,10 @@ jobs:
             skip "Combined commit status is $combined."
           fi
 
-          # An existing approval from the same identity cannot be duplicated.
-          existing=$(gh api --paginate "/repos/$REPO/pulls/$pr/reviews?per_page=100" \
-            | jq -s -r --arg bot "$bot" '[.[] | .[] | select(.user.login == $bot and .state == "APPROVED")] | length')
-          if [ "$existing" -gt 0 ]; then
-            skip "PR is already approved by $bot."
-          fi
-
-          if ! gh api --method POST "/repos/$REPO/pulls/$pr/reviews" \
-              -f event=APPROVE \
-              -f body="Auto-approved: all checks passed on $sha. Only submission files changed." \
-              >/dev/null; then
-            echo "::error::Could not approve PR #$pr as $bot. Check 'Allow GitHub Actions to create and approve pull requests' under Settings > Actions > General and the pull-requests: write permission."
+          response=$(mktemp)
+          if ! gh pr merge "$pr" --repo "$REPO" --squash --match-head-commit "$sha" >"$response" 2>&1; then
+            echo "::error::Could not merge PR #$pr. API said: $(cat "$response")"
+            echo "Check contents: write and pull-requests: write permissions."
             exit 1
           fi
-          echo "Approved PR #$pr as $bot."
+          echo "Merged PR #$pr at $sha."
