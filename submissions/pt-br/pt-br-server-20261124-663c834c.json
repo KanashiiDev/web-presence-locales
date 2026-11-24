@@ -1,0 +1,482 @@
+{
+  "schemaVersion": 1,
+  "id": "pt-br-server-20261124-663c834c",
+  "lang": "pt-br",
+  "ns": "server",
+  "baseCommit": "a338992ee96db2aa29aff542ffa0fd6d1054b325",
+  "source": {
+    "commit": "c7df00f303d989f70116f33e3e2658833428b452"
+  },
+  "changes": {
+    "actions.toggle_view": {
+      "value": "Alterar visualização",
+      "baseTargetHash": "cd0567c8cb4d682ccc90b5c7a03fc990cc9ca83b99888f7c89f12c124872af8a",
+      "sourceHash": "b0c7657dd7bfbaee45c1016fddf0ea804691a2e6da7d260d5e1fa49c04a965da"
+    },
+    "activity.current": {
+      "value": "Dados da atividade atual",
+      "baseTargetHash": "0359e51789e09701b1e67cd6268fe163dac48e8db22f7dccdb9e4679917f5f4f",
+      "sourceHash": "ad3fbe4806ba1461e8023c1b2a47f3a4163e4cc0a481fb4ed53afe13633468c9"
+    },
+    "activity.empty": {
+      "value": "Nenhuma atividade",
+      "baseTargetHash": "635453c3ac16d3850d209d9b17103a7f94cd00eba3231a38158788fadf3ffaed",
+      "sourceHash": "456066243304fea084c152d7fbd3ab9f821bf781d76bc76f6f2a8e3aa5f10e66"
+    },
+    "activity.last": {
+      "value": "Última atualização",
+      "baseTargetHash": "659ffc01fbef63f2089e7a3da12f6829a086f51438fce2a98e7bcca66f2f4092",
+      "sourceHash": "44fafe32391d7542abe6e9c7f14b0947c49db442eab2f810411bd81a70be5207"
+    },
+    "activity.title": {
+      "value": "Atividade atual",
+      "baseTargetHash": "87bb6f0019a25559a45f90833062fadb1c0f3e43752e4e29c4ede0922d6a5f53",
+      "sourceHash": "8e77c41d0b2899e6b9a880dcd6b41abf3b0fb9fa35e884cf45bda213ecf72788"
+    },
+    "app.title": {
+      "value": "Painel do Web Presence",
+      "baseTargetHash": "49fa3e13970761dd0ec880f8d21b9188139d38831534a7b719e873df9fb88032",
+      "sourceHash": "80638d67b4d4a13624f28410725745324af76b3e760aeee3dfe5c3f1b109136a"
+    },
+    "chart.capture.auto": {
+      "value": "Automático",
+      "baseTargetHash": "406c165344af763a80f788e0efade8ccf49f6a9aaf7242c10d384c343681e9de",
+      "sourceHash": "ca1c7f2fd555b9e3a68930e8011a3d319ca31beef246269508d6cfcb54f73fc2"
+    },
+    "chart.capture.large": {
+      "value": "Grande",
+      "baseTargetHash": "275a46d7174563f3ce5d7eb8e395e38dd1d6d3ed6789ad7ff909fd4437959619",
+      "sourceHash": "a8328afe75ca78050a151a27842f31e4994b9bd62bf43b2ba1b22f16d1479c87"
+    },
+    "chart.capture.medium": {
+      "value": "Médio",
+      "baseTargetHash": "c0a7a51cb59ffeacd51c0747708203e6c8848510851ad48d0684f6e5c9f77366",
+      "sourceHash": "8d0a7cc2180087d1ee791a677cacb9652387c265beaf8de1035e55e78cec16b0"
+    },
+    "chart.capture.resolution": {
+      "value": "Resolução",
+      "baseTargetHash": "71a8817fe8c297e2e6cf282b68456c50aa4e95e55e64d5ae80dd4455fdc75eab",
+      "sourceHash": "4be1130d73c4eb499453623cd683ebfe8979526edc9d721f74a15c8761f4dbe2"
+    },
+    "chart.capture.rows": {
+      "value": "Linhas",
+      "baseTargetHash": "de1c2826b2315c02efb598aa388c7040623ec65e7d9b3a89c91c53d5f65a66fa",
+      "sourceHash": "4b552e72da50727b97659d65b36293e6d290d658bc9d0d57aaa47dc613a1aedc"
+    },
+    "chart.capture.small": {
+      "value": "Pequeno",
+      "baseTargetHash": "90f03aa27d228cbf2b6875184f1ed2a72438f1ab31c1f3572366fd1fc666e9f6",
+      "sourceHash": "b3f9d5e97bf5133bfc35a1630c9c388cb85478d48a047c727c7c94c32201bdca"
+    },
+    "chart.capture.tall": {
+      "value": "Alto",
+      "baseTargetHash": "9b7bff387125af6dd4156186ea6fb6a16097317a13917e0df0586e0676eb756b",
+      "sourceHash": "fd4b7db8d72bd49e78393621ce087d6c0d8da485f5be911af06c76ae2f21f635"
+    },
+    "chart.capture.title": {
+      "value": "Layout",
+      "baseTargetHash": "87394bfc0eb761756184e89dc8e208e862fd72071c38458838da8b0109b13017",
+      "sourceHash": "f33cafdea77be0c252342624c64463f7389c1430f33af0ff9870eb20a7543cd1"
+    },
+    "chart.capture.wide": {
+      "value": "Largo",
+      "baseTargetHash": "456bd46bf9ae9619966894009ad1a9b5a8909db1435e124c7b0a3670cf61c35b",
+      "sourceHash": "512230050edaceea383b55fd8337dda88df4fc2bf57e5159a93fbcb94c55f3a2"
+    },
+    "chart.loading": {
+      "value": "Carregando estatísticas...",
+      "baseTargetHash": "87734aa51d55a910786fd63ba96c5f65c0d2658ce6e662b917db7d57be726848",
+      "sourceHash": "a6e74479607dc62452dec0b25810854a1e56809baa4f9493177ff6ad047955e1"
+    },
+    "chart.minute_short": {
+      "value": "{value} min",
+      "baseTargetHash": "dd896617a1b36f573e44bae8f3064bf882238794be83fcfc61945577c9e8bcfa",
+      "sourceHash": "a57ef32614656ef00158fc7ab7e10cfed884b77f01a7c47a8416b0947b80a286"
+    },
+    "chart.minutes_listened": {
+      "value": "{count} min ouvidos",
+      "baseTargetHash": "c9aeb27d202ec2663d9f1797c2f28cd06016f38446e4ac08cf3569bfb82acaea",
+      "sourceHash": "478f16f68ed69b994cab154d57b69cdf1f21e60e5c24ee9d01d2e7212b1a3b26"
+    },
+    "chart.minutes_watched": {
+      "value": "{count} min assistidos",
+      "baseTargetHash": "05fba24907eea26a95a6c4ba9b1f292ae06903f875b84ad3722029d65296e902",
+      "sourceHash": "2d52b2f831a8da8e92d0098886d0aac45b5b67ac12e0521066c9f07e4da813b6"
+    },
+    "chart.range.alltime": {
+      "value": "Todo o período",
+      "baseTargetHash": "c90ea3d68b9b15103ab2fdca802b2cab85c25fc8c892317ff33c4a37375020bb",
+      "sourceHash": "fce67703696542b49b7cdebf1ca1ccb15ef4fce47c430dd9e86b6266b338eb74"
+    },
+    "chart.range.month": {
+      "value": "Mês",
+      "baseTargetHash": "ef1736008f7a3e58d30a32f455a7a2f3a86a51a6eb3e6a5942f2cd6924c81fab",
+      "sourceHash": "7980cc2bb53fd8d86b7886701452e07872dc7542e39659f5c394f3214a0cc0a9"
+    },
+    "chart.range.week": {
+      "value": "Semana",
+      "baseTargetHash": "0f3d57b1a0db6d82291f3ac57c4f9dcb477c5b0d5e97b0d5ffd93b0942dd89be",
+      "sourceHash": "bab126a5eeec84b7db5d9d3093cbea0881c4c5bf9f0ef2804dc1fe6f26bbd659"
+    },
+    "chart.range.year": {
+      "value": "Ano",
+      "baseTargetHash": "6f4c8565e9cf3b07f107354d3c360588883bcc4158e3ce02e0bd539491c41844",
+      "sourceHash": "a52cd36ace3011d1281587bdd5f911ec3cf8e37b56765fcf4128778b6fd3c93a"
+    },
+    "chart.song.one": {
+      "value": "{count} música",
+      "baseTargetHash": "34830f8da2098b472cc8757a61fadafb058faf3efcaf207111f953ded6e3a114",
+      "sourceHash": "e9b53e8c5b955a239d344a0e6a4450f08a476afaa068e1a05b785236dad76f91"
+    },
+    "chart.song.other": {
+      "value": "{count} músicas",
+      "baseTargetHash": "9e63faff961dfed2078a8e504819e41c4e71205be7307d2f03a5bf3c7d329259",
+      "sourceHash": "3cacfa3940e301cfd9cc442eb23e41c67ebc90d603e7070ff59ce743d855a872"
+    },
+    "chart.summary.dialog.error.invalid": {
+      "value": "Insira uma URL válida.",
+      "baseTargetHash": "dcee5ee247183d85e3188c3fbe2df12379cc9c41b68b862884f465625ce99949",
+      "sourceHash": "1bbd10093eb4c9561aac372599aee0c69b1131ed52605ab1c2d2891b6f4c4279"
+    },
+    "chart.summary.dialog.error.protocol": {
+      "value": "Protocolo inválido.",
+      "baseTargetHash": "c30a09816052839ec5970271455dc5156ac7e36369e0642c06d992a104bb6c41",
+      "sourceHash": "9f9a2cbf70c5eb5161ba188b8c300078f042ace1beb11fc4a3287823c0d83204"
+    },
+    "chart.summary.dialog.title": {
+      "value": "Alterar URL da imagem",
+      "baseTargetHash": "9111e06e3e4c94ccb8c600e476286236355da594f0dd2c985aebaa8b368114ed",
+      "sourceHash": "b677b593122f760b24474a8892fac0f513eebbbb3a7483079d2ba3c54b6f2417"
+    },
+    "chart.summary.empty": {
+      "value": "Nenhum dado para este período.",
+      "baseTargetHash": "12b8ce7be6408e6ec775a8baca8a26fe51cca3a2f2e62f9a912854c652a41008",
+      "sourceHash": "d80d23813d2c81061745cff896b5d69b763a4e98f7a465c5c2514df9a70ed62a"
+    },
+    "chart.summary.minutes_listened": {
+      "value": "Minutos ouvidos",
+      "baseTargetHash": "af48f87ed01e24b57f01cd15f9faf8f97ca612ec2d198dc3ce69b4e737ef33b2",
+      "sourceHash": "580cbc4855bf2c26956ab1f9e94a8ec9bac2d594d80ff8464e6119bbd5b6b555"
+    },
+    "chart.summary.topSongs": {
+      "value": "Músicas mais ouvidas",
+      "baseTargetHash": "27bd83ade298da3cb84bcfa3a3e8f5274e8855c8cc67319fc46ab478e4e0e7ce",
+      "sourceHash": "67cd7864d2a031b0c0d59ee6bd811f89f2722b1d920799e38acb8dab12f4361c"
+    },
+    "chart.summary.tracks_played": {
+      "value": "Faixas reproduzidas",
+      "baseTargetHash": "361a16d62a469fdabe7efb6cd9fefd8627c86b0c949260eb7cc10e3f5a1fd585",
+      "sourceHash": "b8b4a45a81aa8b96697ebf6d4d0bb1fd00de7f48753652a7d8028b0a014caca5"
+    },
+    "chart.summary.uniqueTrack.one": {
+      "value": "{count} faixa única",
+      "baseTargetHash": "3b494dc11a2fd4d184d4d8091f7736d082a255da4a9baf28bfb81633a925837a",
+      "sourceHash": "40cf32d8e2c3fa90f0873a5a7ef1c285d212479dd8b963bed7f6153f2962ac2b"
+    },
+    "chart.summary.uniqueTrack.other": {
+      "value": "{count} faixas únicas",
+      "baseTargetHash": "e1c4d7f73b154da79b044ed671e7cb2f1ff750641fb78a1bd29094f2eb0feff8",
+      "sourceHash": "d8998a44b4a9b44973eec836dc4c90f2ed876e001a105b1fbc08e3073377a13a"
+    },
+    "chart.tab.songs": {
+      "value": "Músicas",
+      "baseTargetHash": "814bd326339d6a7e9bb6249c1516367e92abee416a2a182e6288c1d50af192ac",
+      "sourceHash": "3a3495deb78d7ea314b7109d9fe04b169741dba0a030335f6fe7e1ef9a759d97"
+    },
+    "chart.tab.summary": {
+      "value": "Resumo",
+      "baseTargetHash": "74ba5e9ad56cce23425e5e9151078c4df9a24bfe289a32fe6dd257581cb485ab",
+      "sourceHash": "1383b1a907dec333e4d051b9bbce936159d6546645f9ab9f353ad4d2c4140c89"
+    },
+    "chart.tab.time": {
+      "value": "Tempo",
+      "baseTargetHash": "c7ce89b74769f0514555c977485d201dd9cfd330a443ea377c348a7a92233e31",
+      "sourceHash": "211958decf1fc881da57cc14fd877174fcf2f692c6ab0806a79569566a29d0b6"
+    },
+    "chart.tab.videos": {
+      "value": "Vídeos",
+      "baseTargetHash": "03a25d07469e3f8f3977cc6084e4d7ae93f044bebb3974d8b5392c1364dec389",
+      "sourceHash": "15795bd766e9f5af393cb4ce6870a675fa434b986e3580b2fc07dff2ad30c5f6"
+    },
+    "chart.title.watch": {
+      "value": "Estatísticas de vídeos",
+      "baseTargetHash": "7fca6d1d8c22f0d0c19bdabf72a7a0ccce3b5e97da0abe4f0ccffd91b03fea63",
+      "sourceHash": "0806b879725bfd62c33f9790e9e2d969a8f26fc52276fdc48430394e80b1264f"
+    },
+    "chart.total.duration": {
+      "value": "{minutes} min no total",
+      "baseTargetHash": "c7fc06a72072a8465910e2a86e590c0332671d4b91bd4d07067a9e776959d7e1",
+      "sourceHash": "75b44fceec04768f7d98adfd86407c3ea776ee8c4dc3765fcc18937e7f970f7a"
+    },
+    "chart.track.one": {
+      "value": "{count} faixa · {minutes} min",
+      "baseTargetHash": "06c987150d31f03217bcebf8933d5e64ccedef9985c1970e8dc115706e708dc9",
+      "sourceHash": "3af21a655bd9d02be1612be550c68adb86daa38d6cf822d964f543b91bb616e0"
+    },
+    "chart.track.other": {
+      "value": "{count} faixas · {minutes} min",
+      "baseTargetHash": "01fd5bc76d9bd6488200ff0cd9e4ed8513673cb2bb8762fbae7f1bcb4034a8c3",
+      "sourceHash": "cf6bf982be574ed5854e78d8d362f6ba268f00c33ac1709fdc72e657a4462476"
+    },
+    "chart.track.video.one": {
+      "value": "{count} vídeo · {minutes} min",
+      "baseTargetHash": "a968c07cbd6c72c698a7b08f49d6e7dbe580aaceffa0ec19948ae53810dc21ae",
+      "sourceHash": "15ce5ad80f2bcb51b9f0df34a1bb84e1c0131e0c64c87f280a0d174745ed725b"
+    },
+    "chart.track.video.other": {
+      "value": "{count} vídeos · {minutes} min",
+      "baseTargetHash": "0783adbdbdf927559aa8eb5ceba03dd9e3b8613cbef5e30d3c30c86ffcd76670",
+      "sourceHash": "acc4ea60d91fbed857a7626a0c24a15c6cfdae736973f00ceb6d37ba0e9a9097"
+    },
+    "chart.video.one": {
+      "value": "{count} vídeo",
+      "baseTargetHash": "0d26605e8083dca6d03e221313a5c4833928f03e4af348e70b3838418413e90a",
+      "sourceHash": "3e578b9415cee7150af252843f482a6a0831c8810c5df4ed4e86f85cf21a519e"
+    },
+    "chart.video.other": {
+      "value": "{count} vídeos",
+      "baseTargetHash": "c3b46a307812c7d9ca415ec6515054e5be5d9a816e640c8e2e0c381365b90b6e",
+      "sourceHash": "affd51cc5309fff195818c755cb8477ba0674f4acb5490ef6cc66de2be3696eb"
+    },
+    "footer.text": {
+      "value": "Web Presence por KanashiiDev",
+      "baseTargetHash": "862d84c2004db776ea376256ae695d0b64da53051860604dec2978dcb3951a32",
+      "sourceHash": "b5085e431ea3de9ce95b569886b6507e77b9c05deefa1de7bf1d0a96bda05627"
+    },
+    "history.release_hint": {
+      "value": "Solte para carregar mais",
+      "baseTargetHash": "316879982410c3121dbb902707766c0134350337b39a70a70e14c25ccf16f1b7",
+      "sourceHash": "0ae4033bd55e9a930bcae7a42fa09ffaef4a394e0c788b88c6e28eeede96bde7"
+    },
+    "history.title": {
+      "value": "Músicas recentes",
+      "baseTargetHash": "b4bfad96ad59fefcbda84a7361522a351affc280af8ea9f4fd38426635fc79fb",
+      "sourceHash": "e2e51f16b0670fdcb48cc32dc4b778fd66f4849cd7fedb49489bd90d7b826d04"
+    },
+    "history.title.watch": {
+      "value": "Vídeos recentes",
+      "baseTargetHash": "e8590ce3952f785e1bce68459a822645418c2e60d466220022bf0f305cb45df3",
+      "sourceHash": "8c23fecd69cd44d4c20d638ffdf9f8dab71c6c258796f004f77230e29211941e"
+    },
+    "logs.empty": {
+      "value": "Nenhum log encontrado para este filtro.",
+      "baseTargetHash": "16b485c06a0ddd52fe0ec55b4797141b5da384dfc88dc5ad2eea4675e370a9c7",
+      "sourceHash": "870c0644a681038149a53e5969b67203aa12696bb3b9066beee6c185a77bcf9f"
+    },
+    "logs.error": {
+      "value": "Erro",
+      "baseTargetHash": "d89c59f0e441185358173595fa4efe2ee69351dbee39f58532b7ead399db9134",
+      "sourceHash": "de4bde65fdea4b6ac367d1dd28f2947a0c2f3bbcec7a8994e0923980141ff87b"
+    },
+    "logs.filter": {
+      "value": "Filtrar logs por nível",
+      "baseTargetHash": "4a3f7dcb3991bb821aa41e58ba7247b00bfe3d44ec15a5c177cdb3e1aec0aa2e",
+      "sourceHash": "36b023f07ddfd98fb2807dd3cb531a7f18703049c93acd4591c7749ac907d7d9"
+    },
+    "logs.info": {
+      "value": "Info",
+      "baseTargetHash": "37bffeb291dfe69682620263a00172a4587936e4cc616833860fdb99716fa2ba",
+      "sourceHash": "bce110c730fe3070e6b6b14ddf016c1af911d203ae3f3aff728a67ef64fc5863"
+    },
+    "rpc.connected": {
+      "value": "Conectado",
+      "baseTargetHash": "f1f5587e7e8a25c6eab19e3be8e975edcc000d1eded5489012eb5b40a3b6f621",
+      "sourceHash": "c0bb610c69d87a0cd4bd3a3bdc65f1cb26874e19a63682044a16e6cf8de391d0"
+    },
+    "rpc.disconnected": {
+      "value": "Não conectado",
+      "baseTargetHash": "e05628c73f3b7c8be5f92ad64cfc6294e42f4e3f4f66e055dd5cde4a2d88e4d1",
+      "sourceHash": "081d286fc435d37b3d2cb19bc4e72423904046be3492b0b69110d73a36a302f0"
+    },
+    "rpc.label": {
+      "value": "Status:",
+      "baseTargetHash": "a2d0e9d9f008cb9f5133451fbb28acd2baa05b6b9e6f09d9457ca8bb1cfa2979",
+      "sourceHash": "89f15d17f25d6de392ed7ed0f70cc9962ff9de21e982d18e28ac180abe5ad0a1"
+    },
+    "rpc.status": {
+      "value": "Status do RPC",
+      "baseTargetHash": "e07fa1fd190615b4254f62edeb21994ac7e6b9d9f9c5450bc0d767db5926a695",
+      "sourceHash": "bd2cb726f0e15d1f106cf983b18657483b7b212636bc80f459eb9f0145e00694"
+    },
+    "settings.auto_update_check": {
+      "value": "Verificação automática de atualizações",
+      "baseTargetHash": "7d7dc85ed81172ec1d1221e9c4eb2523e5cd6e7ccb5195c10f52b08225ac07ea",
+      "sourceHash": "cccd192c7c0056173f675344d4648dc59847da4dc8547ce84189c36602431a01"
+    },
+    "settings.auto_update_check.note": {
+      "value": "Ativar a verificação automática de atualizações",
+      "baseTargetHash": "0b6e8a598ecfec17f4a35c9470f8112fc2677b91111766fb8684cef8211b403c",
+      "sourceHash": "25466e232351a2a4e6c19498b3202d5990eaee9c039fa59795624055a1c353f0"
+    },
+    "settings.discord_web_support": {
+      "value": "Suporte ao Discord Web",
+      "baseTargetHash": "c46394334f55708ace99faaa33cccff19a88c837ae767bf7fa0dfdd3840c914c",
+      "sourceHash": "c179d79aa5a67cbc9094e617d0f6514e116722fd6898c55b67dcf7663670c1f8"
+    },
+    "settings.discord_web_support.note": {
+      "value": "Ativar o suporte ao Discord Web.",
+      "baseTargetHash": "820b215fdc732fa2562d5dbf0dd18a992102f5700deae774aacf9597372ec0f0",
+      "sourceHash": "1d247802d70df0a088f1a67c883fb65c2bbd53931283f9d37f05c16263f01bd1"
+    },
+    "settings.export_activity_files": {
+      "value": "Compartilhamento local de atividade",
+      "baseTargetHash": "561b279e3501af77606ea2397be2efe72911335025fc4f6205de78bbcb55b1b6",
+      "sourceHash": "f7137a35830d565295d2ac1b84a49a684b55b8016cfc8677541fba573aded38b"
+    },
+    "settings.export_activity_files.note": {
+      "value": "Grava os dados da atividade atual em arquivos no diretório userData.",
+      "baseTargetHash": "36afd2a87b0009289ac935dd3c5a97aacd07afacdd0a9c9d81bbd80828364544",
+      "sourceHash": "01579f84b84e020ea305e25036d6d58bd1233de5fb938f88e82aec7a87375308"
+    },
+    "settings.keep_history": {
+      "value": "Manter histórico",
+      "baseTargetHash": "fc7b4e8c529a736ac8b6b3ea2bd6696aba72ef580980780231d49db3c47e68fb",
+      "sourceHash": "edaae8a02d5fc443dc5cc467cb4aaae36396c790fad73b2c2a5972f984da10be"
+    },
+    "settings.keep_history.note": {
+      "value": "Impede que o histórico de mídia seja apagado quando o servidor é iniciado.",
+      "baseTargetHash": "9a933dcef42dd37aa21ec442e096742cf61fb62e1b79e500340f519fcf715e05",
+      "sourceHash": "3070cc15c53f0d6ae9ee866a134c951ce21e0d1d3e51b1bffce01872af976fdd"
+    },
+    "settings.keep_logs": {
+      "value": "Manter logs",
+      "baseTargetHash": "d96912027d09902597050eaa24adb51f3062cf2cdc1251d9552b1a432f4994cc",
+      "sourceHash": "0a37504bd24472475760b0b59c4effec7bc4bd8c6dd90e286624944cc48f38ae"
+    },
+    "settings.keep_logs.note": {
+      "value": "Impede que o log do servidor seja apagado quando o servidor é iniciado.",
+      "baseTargetHash": "a7d3ce9107a7e205f7c5bbf87e481eaf6c5c739a4fc13b9831242b08561665ab",
+      "sourceHash": "2c645e510ff4a2a52406047afa865df86047396dd808004b2a21bfdb8fb564ae"
+    },
+    "settings.log_media_update": {
+      "value": "Registrar troca de mídia",
+      "baseTargetHash": "49fc530306bcfff731fda400908ead74113e3b6dbd79dd73b4c2c6ac20489e3c",
+      "sourceHash": "bdcf33d8aef4a8437b9c69a1e722c708c04c76512a8b365f2d11eb3e4636830b"
+    },
+    "settings.log_media_update.note": {
+      "value": "Salvar eventos de troca de mídia no log.",
+      "baseTargetHash": "7718903e49582deaaea1e30efa7ddabc45238041481106cb980c34da97c58936",
+      "sourceHash": "d7cdaec160c2fbf260217ba58b85c35d87385e32a4025fdd9db068e2cd9586cb"
+    },
+    "settings.max_log_size": {
+      "value": "Tamanho máximo do log",
+      "baseTargetHash": "d4ac0bb2617dce242ca23bc418cea47fb40c0ff0ba1fcaf640416d5ec4ff3c79",
+      "sourceHash": "a74ca5336a14fcb04320931a760d44c3eb3ad1bff1e2e6727a57b8556c36ac27"
+    },
+    "settings.max_log_size.note": {
+      "value": "Tamanho máximo do arquivo de log antes da remoção (MB)",
+      "baseTargetHash": "22ed312db28d5cdafc50fb97b80eb8ea8d5b24ade53695cefaf1bdb1ee46e11a",
+      "sourceHash": "ade33176d29ca74d05d268e906a3ae4652980b36dbf99a4f534d4d95f87af284"
+    },
+    "settings.message.noChanges": {
+      "value": "Nenhuma alteração detectada",
+      "baseTargetHash": "1736d1318d1ae2339dd919ece67412cbaeae4073e6ee93cb05febda6eddf12c5",
+      "sourceHash": "9bc5728939ae27d00f2dd79456af90393f68b4714e24235ea997713701ac7db7"
+    },
+    "settings.message.reset": {
+      "value": "Todas as configurações serão restauradas para os valores padrão e o histórico de mídia será apagado. Tem certeza?",
+      "baseTargetHash": "755671ef415f7532f90079a8659406131b05b9b67146fd493118ea71d724556b",
+      "sourceHash": "9397b4ed993461fc3af50956fb6254541196420e5ed91c087fed469e30d9e08a"
+    },
+    "settings.message.saved": {
+      "value": "Reiniciando o servidor para aplicar as alterações...",
+      "baseTargetHash": "afee66c6105cc1863d8a496febba5d32d88698b48fc41113e16db12877ffad84",
+      "sourceHash": "85141f546b0e375e6f8df999cb6f1d6003c200ae58211ce92b925e59c6adce1a"
+    },
+    "settings.newPort": {
+      "value": "Conectando à nova porta...",
+      "baseTargetHash": "cb3b2ff58737659f67c93f8fe558caafad974546194c7c911f42778dbb65baf0",
+      "sourceHash": "f8e03794ef5378dade75c882d53d98d4342e0e17ee69e9f1677b17b3f7af1be8"
+    },
+    "settings.open.directory": {
+      "value": "Abrir diretório",
+      "baseTargetHash": "b0238b3605e8f49c569010b1007c39f670197335c9b831c4bc33b4c6795b2394",
+      "sourceHash": "a9561be6e1bcf3f6b009ee5869289e2fbea509c2923546d16789f9a093be0e65"
+    },
+    "settings.open.directory.error": {
+      "value": "Não foi possível abrir a pasta",
+      "baseTargetHash": "f3393cd1ef6dacf6a196e4b4e5f4731776df098953daf2fe90269f16687be6f3",
+      "sourceHash": "ff0b20faa2ce23ac34cfa097c824aa9652da3dea4146c1fa3d1d42d420799167"
+    },
+    "settings.open.directory.not_found": {
+      "value": "O arquivo não foi encontrado ou ainda não foi criado.",
+      "baseTargetHash": "258363856c11facefd040462a296fd955462df5fc73962c28adc81b3bce2f037",
+      "sourceHash": "902bd82a593ebaad43cc6a910086e856d001455f08487804ab8ef267ae33af71"
+    },
+    "settings.port": {
+      "value": "Porta",
+      "baseTargetHash": "aa18a438c37544854c1993ab974d5976d990153f850a27cd954f19f922294b45",
+      "sourceHash": "326c6eabe62a3c783f33f02be3704ed6ca4b80a7c525956fb41e5b3dbc4c07bd"
+    },
+    "settings.port.note": {
+      "value": "Porta de escuta do servidor",
+      "baseTargetHash": "b93d7faaa774e91cacfd9f27027dd5f9c988761eafc0890f760f8ae611ccaa63",
+      "sourceHash": "0f98b0bac67a32d78680eccf168d5b76995688d976cd80dc47e82cfc75226c07"
+    },
+    "settings.redirect.fail": {
+      "value": "Falha no redirecionamento, atualize manualmente",
+      "baseTargetHash": "51b423d828cef75e1c9463b3f4f64bd41ddedf53bfaf686df77745bb9697689c",
+      "sourceHash": "5e5fdf7edc82e2883dbf5e75d250572abd4ad85a518dfa574fc157e07c9f64b9"
+    },
+    "settings.reset": {
+      "value": "Restaurar padrão",
+      "baseTargetHash": "10dd1f2afb48ec53fc2f36185a878d7150dbbb182e9480040f8793fe10d9426e",
+      "sourceHash": "b702dc6c97231189e5d7cecf67c06f1e154249a04f6660035068e5cad0c38b9a"
+    },
+    "settings.reset.complete": {
+      "value": "As configurações foram restauradas",
+      "baseTargetHash": "b1d3169cf4baeb0845aa46bcb5d74faab0c3be4e3e6faf4dfe1a89b1b748f719",
+      "sourceHash": "0776844c1430943d0ab092c7790a8454e124960a9e2450c9148fb1c1d873dec6"
+    },
+    "settings.reset.fail": {
+      "value": "Ocorreu um erro ao restaurar as configurações",
+      "baseTargetHash": "2c57a1f8de3cf4d40dfd10f74b337d9c05714203f5428dc96a7c49993da78653",
+      "sourceHash": "ed9a37c430427a6cdb45d885f39cbfebbdc9335131d19e97d71159e5de598384"
+    },
+    "settings.save": {
+      "value": "Salvar alterações",
+      "baseTargetHash": "08e27882c2c5bca039ca639d5904678d901d148b1488e39753901eac49290141",
+      "sourceHash": "05f9a15b1601056294727de899c2ee926065a2d93521a67459bc4bebb0d3e27e"
+    },
+    "settings.saved": {
+      "value": "Salvo!",
+      "baseTargetHash": "9f9b2b8144ace7463dbb26fa0cd355e00a2c5f1edfde3e918405bd20da5cd389",
+      "sourceHash": "731143cd7705b4fc4dd68aa591f95abf9b5516804d86d5d33b8d2affd5b2826e"
+    },
+    "settings.saving": {
+      "value": "Salvando...",
+      "baseTargetHash": "1d0e9d381d95912c5acc2a2393086da7eef19aa7dcc0d11d6a53392f360b7b31",
+      "sourceHash": "e59e911aa8ffd92b4f862aeca866e371a5e74de022dadc05ba9ebab44ce7558e"
+    },
+    "settings.update_check_interval": {
+      "value": "Intervalo de verificação de atualizações",
+      "baseTargetHash": "80de1a48ff1bfa90a0fb4602ac1fd861ecfa7d09abffe339d6ed9071ae54a2ae",
+      "sourceHash": "747d86f9f45cc54203b8e2d6807a0f3dada82fa9c9f1938d9a6756e13e2ec90b"
+    },
+    "settings.update_check_interval.note": {
+      "value": "Intervalo para verificar atualizações (horas)",
+      "baseTargetHash": "645690bba728ef7e80118ad8fd98da527cbc734b60d4abe3433f42e6037e4ead",
+      "sourceHash": "9df81021cc9f7400cf43a049ba4e95bc1d582b5b9bc5f78c4cf6a3a1731e5e87"
+    },
+    "settings.wnp_obs_support": {
+      "value": "Suporte ao WNP OBS",
+      "baseTargetHash": "8d6ca6181773eea8b847d1d75745e494110dc366811aa1a14293e5301aa06cf5",
+      "sourceHash": "42cfbbe48be7ea86fb8a3d91e9751ce28a0c881c819c3aea2a80ceee07d398bf"
+    },
+    "settings.wnp_obs_support.note": {
+      "value": "Ativar o suporte ao WebNowPlaying OBS.",
+      "baseTargetHash": "d51219af22af840f474b6201e1778c9246ecd4953280df1d111c96b3fd44b8e2",
+      "sourceHash": "741b9524a11e4ade3d939b66ee4b4bbcc23995f0f39a1ca6ca7156479f1b087d"
+    },
+    "settings.wnp_rainmeter_support": {
+      "value": "Suporte ao WNP Rainmeter",
+      "baseTargetHash": "e4ee9aedc9a00967f7f396bcb15e3ab080cbfb293feea47f069b1a06c918a782",
+      "sourceHash": "a19382a8a36193523ff71bbb9c2290732f220cd3d500221caf9002ec248f4431"
+    },
+    "settings.wnp_rainmeter_support.note": {
+      "value": "Ativar o suporte ao WebNowPlaying Rainmeter.",
+      "baseTargetHash": "a224d58d0723b940dc2275912e3c98618153b775b23f2b6aba9e5f06a490f27e",
+      "sourceHash": "5176da7e41206325527256f2bc91b821e7e4855f16b4053f7c0ac82edcbdbfb1"
+    }
+  }
+}
