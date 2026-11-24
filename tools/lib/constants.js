@@ -30,7 +30,9 @@ export const LANG_LABELS = Object.freeze({
   ar: 'Arabic', de: 'German', el: 'Greek', en: 'English', es: 'Spanish',
   fi: 'Finnish', fr: 'French', hi: 'Hindi', id: 'Indonesian', it: 'Italian',
   ja: 'Japanese', ko: 'Korean', nl: 'Dutch', pl: 'Polish', pt: 'Portuguese',
+  'pt-br': 'Brazilian Portuguese',
   ru: 'Russian', sv: 'Swedish', tr: 'Turkish', uk: 'Ukrainian', zh: 'Chinese',
+  'zh-cn': 'Chinese (China)', 'zh-tw': 'Chinese (Taiwan)',
 });
 
 /** Repository layout. */
