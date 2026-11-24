@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "hashVersion": 1,
+  "lang": "pt-br",
+  "source": {
+    "repo": "KanashiiDev/web-presence",
+    "commit": "5a73ffb2b01b3117c7e404d22600797ad78e56d1",
+    "blobs": {
+      "extension": "d405b6e329af4953141de87df5bba6f86ec7b259",
+      "server": "786c1f36e63699cb0c10d45454aa1e86ddc16f56",
+      "shared": "c6ad8ec024fb71d944c5342d35c0c0f1af865495"
+    }
+  },
+  "namespaces": {
+    "extension": {
+      "targetBlobSha": "d405b6e329af4953141de87df5bba6f86ec7b259",
+      "keys": {}
+    },
+    "server": {
+      "targetBlobSha": "786c1f36e63699cb0c10d45454aa1e86ddc16f56",
+      "keys": {}
+    },
+    "shared": {
+      "targetBlobSha": "c6ad8ec024fb71d944c5342d35c0c0f1af865495",
+      "keys": {}
+    }
+  }
+}

@@ -17,6 +17,11 @@
     "server": true,
     "published": true
   },
+  "pt-br": {
+    "label": "pt-br",
+    "extension": true,
+    "server": true
+  },
   "ru": {
     "label": "Russian",
     "extension": true,
