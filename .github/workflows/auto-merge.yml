@@ -12,6 +12,7 @@ on:
     types: [completed]
 
 permissions:
+  actions: write
   contents: write
   checks: read
   pull-requests: write
@@ -101,3 +102,14 @@ jobs:
             exit 1
           fi
           echo "Merged PR #$pr at $sha."
+
+          # A merge performed with GITHUB_TOKEN does not emit a push event that
+          # starts other workflows, so dispatch the submission processor here.
+          # workflow_dispatch is one of the events GITHUB_TOKEN can trigger.
+          dispatch=$(mktemp)
+          if ! gh workflow run process-submission.yml --repo "$REPO" --ref main >"$dispatch" 2>&1; then
+            echo "::error::Could not dispatch process-submission.yml. API said: $(cat "$dispatch")"
+            echo "Check actions: write permission."
+            exit 1
+          fi
+          echo "Dispatched process-submission.yml."
