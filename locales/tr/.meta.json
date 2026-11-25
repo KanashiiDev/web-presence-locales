@@ -13,7 +13,7 @@
   },
   "namespaces": {
     "extension": {
-      "targetBlobSha": "17c9b79e6665977d0a2062d8108dd40826b345a6",
+      "targetBlobSha": "400fdda3b25e4866f89d469b5c2842b999de5c5b",
       "keys": {
         "backup.export": {
           "sourceHash": "4b996e887a0b1f06c4cda9284373fbd9a6456832e24011cc79ae5af40274955e"
@@ -1419,6 +1419,18 @@
         "stats.yesterday": {
           "sourceHash": "1ce8af62a445fb658874b4c555683a9034f5078a334fdd92f5eda2c8fbff064a"
         },
+        "translationEditor.confirmModal.localOnly": {
+          "sourceHash": "2059bcf8e68b6010f9043d85044cf951e52ca02a26bc42b8f1f4e056d13b0688"
+        },
+        "translationEditor.confirmModal.question": {
+          "sourceHash": "86b113f5f51f61a082f92af6204914c3971ac65c3e46b9f39a33fdbba8b09dc0"
+        },
+        "translationEditor.confirmModal.submit": {
+          "sourceHash": "f8753311bc8b1f4f7a4631ebfd73769ae7e2c5c7dd7adeb7d96f474c4fe09cb1"
+        },
+        "translationEditor.confirmModal.title": {
+          "sourceHash": "f1f4d095ec19a04990bb83c0e68ea61c09b538627e09ab1191b15a4c40eca0c1"
+        },
         "translationEditor.conflictTitle": {
           "sourceHash": "c4bab7353d76ebc5bb680e1b801ade33f1eb616a868f0b4a9361cf3b2b85278b"
         },
@@ -1596,6 +1608,9 @@
         "translationEditor.document": {
           "sourceHash": "2561eecd27f9de76bb1b04da3e86afd241160bef8c26cf2cba71d9a187c9bf68"
         },
+        "translationEditor.downloadSource": {
+          "sourceHash": "275ff04fbceffd7c9e8db8dd055daa93a8db8d394677ef1bed7e13a3277a1cd2"
+        },
         "translationEditor.empty": {
           "sourceHash": "807e053a6a700a3b64de991f1f3517a626d389b6730d02deb91bd43bc72de6a0"
         },
@@ -1640,6 +1655,27 @@
         },
         "translationEditor.filter.untranslated": {
           "sourceHash": "b9f76ade8879128c9f2d99c791e124142eb55a8b6f04089e3485828d8ea92763"
+        },
+        "translationEditor.home.desc": {
+          "sourceHash": "cc754d2ce2dbca4a168208a862100437b7946b6dd333999871c6225a8ef48b32"
+        },
+        "translationEditor.home.empty": {
+          "sourceHash": "9cb8fc964fbb62cf6fed442e65c2c550cd584cdb5af2a4388ce0056bf2242bda"
+        },
+        "translationEditor.home.fileModal.title": {
+          "sourceHash": "3e2569939046412c0bf1ff1239af1dffa8304af68d045df54401c431494f7a09"
+        },
+        "translationEditor.home.publishedHint": {
+          "sourceHash": "d3132d63312475a5d15f64998260551a6b716aa55d066a972d5505cbe54a581c"
+        },
+        "translationEditor.home.publishedProgress": {
+          "sourceHash": "1e0e20c7bef7a125666125e4d6789492e676485b530d5087f36f5b43c5d29d84"
+        },
+        "translationEditor.home.title": {
+          "sourceHash": "01f63cd39ff0598b4183db4656a99ac892cfe3977ad500f6ca464c017c5b6a36"
+        },
+        "translationEditor.home.wordsRemaining": {
+          "sourceHash": "c8bf2dfb8c67a565b914915f4ff83b35a0585ba93f4ee542853e937460ab584d"
         },
         "translationEditor.importDrafts": {
           "sourceHash": "40eca36087278c6db6fb8bb46a50f0574b2855e71503a716f904fa87c5bd89f9"
@@ -1963,7 +1999,7 @@
           "sourceHash": "6c79b83afe305ea19469c904f490428f6745a30ca9c6287042d2ff9ad5dedb37"
         },
         "translationEditor.validation.unsafeValue": {
-          "sourceHash": "bbc41201e140d7f11f1c06aaa22af439ab0315052536e39b2fcd3de61cccb051"
+          "sourceHash": "cdb64248d42e1970d92177c4ea67f13d0e479fe150f83a9a2559ea265d1a724e"
         },
         "tutorial.finish": {
           "sourceHash": "f6d133ea1622c7251542d34f6c8f30b84195d78ed3d406b77ee60a00106d4289"
