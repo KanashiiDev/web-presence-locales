@@ -10,7 +10,7 @@ function issue(severity, code, key, message) {
   return { severity, code, key, message };
 }
 
-function validateJsonShape(value, label) {
+export function validateJsonShape(value, label) {
   const issues = [];
   if (!isPlainObject(value)) {
     issues.push(issue('error', 'not-object', null, `${label} must be a flat JSON object`));
@@ -18,8 +18,8 @@ function validateJsonShape(value, label) {
   }
   for (const key of Object.keys(value)) {
     if (isUnsafeKey(key)) issues.push(issue('error', 'unsafe-key', key, `${label} contains an unsafe key`));
-    if (Array.isArray(value[key]) || (value[key] !== null && typeof value[key] === 'object')) {
-      issues.push(issue('error', 'nested-value', key, `${label} values must be strings`));
+    if (typeof value[key] !== 'string') {
+      issues.push(issue('error', 'non-string-value', key, `${label} values must be strings`));
     }
   }
   return issues;

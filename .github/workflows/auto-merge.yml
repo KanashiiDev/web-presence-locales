@@ -30,6 +30,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      # The run executes in the base-repo context. Check out trusted tooling
+      # from main so the check-run gate cannot be altered by the PR.
+      - name: Checkout trusted tooling
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: main
+          path: trusted
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: trusted/.nvmrc
       - name: Merge the pull request
         env:
           GH_TOKEN: ${{ github.token }}
@@ -75,18 +86,13 @@ jobs:
             fi
           done <<<"$files"
 
-          # Every check run on the current head must be finished and green.
-          checks=$(gh api --paginate "/repos/$REPO/commits/$sha/check-runs?per_page=100" \
-            | jq -r '.check_runs[] | [.status, (.conclusion // ""), .name] | @tsv')
-          [ -n "$checks" ] || skip "No check runs found for $sha."
-          while IFS=$'\t' read -r status conclusion name; do
-            [ -n "$status" ] || continue
-            if [ "$status" != "completed" ]; then skip "Check '$name' is $status."; fi
-            case "$conclusion" in
-              success|neutral|skipped) ;;
-              *) skip "Check '$name' concluded with $conclusion." ;;
-            esac
-          done <<<"$checks"
+          # Judge the latest run per (app.id, name). GitHub's filter=latest only
+          # removes superseded attempts inside one check suite; an older failed
+          # suite on the same SHA would otherwise block this merge forever.
+          if ! gh api --paginate "/repos/$REPO/commits/$sha/check-runs?per_page=100" \
+            | node trusted/tools/bin/check-runs.js; then
+            skip "Check runs are not green for $sha."
+          fi
 
           # Legacy commit statuses, when present.
           read -r combined count <<<"$(gh api "/repos/$REPO/commits/$sha/status" \

@@ -15,6 +15,8 @@ export const HASH_VERSION = 1;
 
 /** Authoritative source language (owned by the main web-presence repository). */
 export const SOURCE_LANG = 'en';
+/** Login used by commits/comments created with the workflow GITHUB_TOKEN. */
+export const PROCESSOR_BOT_LOGIN = 'github-actions[bot]';
 export const SOURCE_REPO = process.env.SOURCE_REPO || 'KanashiiDev/web-presence';
 export const SOURCE_BRANCH = process.env.SOURCE_BRANCH || 'main';
 export const SOURCE_LOCALES_PATH = 'locales/en';

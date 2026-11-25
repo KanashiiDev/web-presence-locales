@@ -9,8 +9,11 @@ on:
     inputs:
       cleanup_orphans:
         description: Remove target keys that no longer exist in the English source
-        type: boolean
-        default: true
+        # A string choice keeps the UI unambiguous. The value is passed to the
+        # script in its own env var so `||` cannot erase an explicit "false".
+        type: choice
+        options: ['true', 'false']
+        default: 'true'
 
 permissions:
   contents: write
@@ -45,9 +48,11 @@ jobs:
           # Prefer the commit carried by the dispatch payload; never silently
           # fetch a different upstream HEAD than the one that triggered us.
           SOURCE_SHA: ${{ github.event.client_payload.commit || github.event.client_payload.sha || github.event.client_payload.after || '' }}
-          # Empty means "use the script default" (cleanup enabled). Only an
-          # explicit false disables it.
-          CLEANUP_ORPHANS: ${{ github.event.client_payload.cleanup_orphans || inputs.cleanup_orphans || '' }}
+          # Keep the two sources separate: `||` treats boolean false as falsy,
+          # so combining them would silently enable cleanup. toJSON() emits a
+          # literal (`false`, `true`, `null`) that the script parses directly.
+          CLEANUP_ORPHANS_DISPATCH: ${{ toJSON(github.event.client_payload.cleanup_orphans) }}
+          CLEANUP_ORPHANS_INPUT: ${{ inputs.cleanup_orphans || '' }}
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"

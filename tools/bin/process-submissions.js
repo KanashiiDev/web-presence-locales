@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /** Process all pending submissions against the live repository (CI only). */
 import fs from "node:fs/promises";
+import { PROCESSOR_BOT_LOGIN } from "../lib/constants.js";
 import { createGitHubAdapter } from "../lib/adapters.js";
 import { processSubmissions } from "../lib/processor.js";
 import { githubJson } from "../lib/http.js";
@@ -73,7 +74,10 @@ async function notifyResults(results, token, prNumberOverride) {
           .find(Boolean);
       if (!prNumber) continue;
       const comments = await githubJson(`${repoPath}/issues/${prNumber}/comments?per_page=100`, { token });
-      if (comments.some((comment) => String(comment.body || "").includes(marker))) continue;
+      // Only our own comment counts. A third party posting the same marker
+      // must never suppress the real processor result.
+      if (comments.some((comment) => comment?.user?.login === PROCESSOR_BOT_LOGIN
+        && String(comment.body || "").includes(marker))) continue;
       const keys = [
         ...(result.qaDroppedKeys || []).map((entry) => `${entry.key} (${entry.codes.join(", ")})`),
         ...(result.staleKeys || []).map((key) => `${key} (source changed)`),

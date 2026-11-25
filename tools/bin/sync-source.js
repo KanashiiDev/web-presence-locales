@@ -16,6 +16,7 @@ import { localePath, readJsonIfExists, writeIfChanged, resolveWithin } from '../
 import { serializeTranslations } from '../lib/util.js';
 import { teHashSource } from '../lib/hash.js';
 import { detectSafeRenames, mergeSafeRenames } from '../lib/renames.js';
+import { resolveCleanupOrphans } from '../lib/options.js';
 import { ensureHashVersion, serializeMeta } from '../lib/metadata.js';
 import { readLanguages } from '../lib/languages.js';
 import { planOrphanCleanup, applyOrphanCleanup } from '../lib/orphans.js';
@@ -46,7 +47,10 @@ const changed = [];
 // Orphan cleanup is the default: a stale target key is dead weight and can
 // never be removed through the editor (rows are built from English keys only).
 // Only an explicit `false` opts out.
-const cleanupOrphans = String(process.env.CLEANUP_ORPHANS ?? '') !== 'false';
+const cleanupOrphans = resolveCleanupOrphans(
+  process.env.CLEANUP_ORPHANS_DISPATCH,
+  process.env.CLEANUP_ORPHANS_INPUT,
+);
 const metaOrphansRemoved = [];
 
 for (const ns of NAMESPACES) {

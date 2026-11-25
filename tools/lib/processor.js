@@ -22,7 +22,7 @@ import { applySubmission } from './patch.js';
 import {
   updateMetaForPatch, serializeMeta, bootstrapNamespace, bootstrapMeta, emptyMeta, ensureHashVersion,
 } from './metadata.js';
-import { validateTranslation, completionGaps } from './validation.js';
+import { validateTranslation, completionGaps, validateJsonShape } from './validation.js';
 import { teValidateKey } from './qa.js';
 import { computeCoverage, resolvePublished } from './coverage.js';
 import { serializeTranslations, nowIso } from './util.js';
@@ -110,6 +110,16 @@ async function buildOutcome({ adapter, langs, sourceState, lang, id, expectedHea
   }
   const isNewTarget = currentTarget === null;
   if (isNewTarget) currentTarget = { ...nsSource };
+  // A malformed target file must be rejected, not copied verbatim into the
+  // next commit. The patch only QA-checks accepted keys, so unrelated bad
+  // values would otherwise survive into the published translation file.
+  const shapeIssues = validateJsonShape(currentTarget, `${lang}/${ns}`);
+  if (shapeIssues.length) {
+    return rejectSubmission({
+      id, lang, payload, submission, reason: 'invalid-target-file',
+      errors: shapeIssues.map((entry) => `${entry.key || '(root)'}: ${entry.message}`),
+    });
+  }
 
   let currentMeta = await adapter.readMeta(lang, expectedHead);
   const migrated = ensureHashVersion(currentMeta, sourceState.source);
@@ -205,11 +215,28 @@ async function buildOutcome({ adapter, langs, sourceState, lang, id, expectedHea
   const files = [];
   const deletions = [submissionRel(lang, id)];
   if (isNewTarget && !skipSeed) {
+    // Only write files that are genuinely absent. A language can exist with
+    // translated files in some namespaces while one namespace is missing;
+    // seeding all namespaces from English would silently destroy those
+    // translations. For a brand-new language every file is absent, so all
+    // required files are still created.
     for (const seedNs of NAMESPACES) {
-      files.push({
-        path: targetPath(lang, seedNs),
-        content: serializeTranslations(seededTargets[seedNs], Object.keys(sourceState.source[seedNs] || {})),
-      });
+      let content;
+      if (seedNs === ns) {
+        content = serializeTranslations(newTarget, Object.keys(nsSource));
+      } else {
+        let existing = null;
+        try {
+          existing = await adapter.readTarget(lang, seedNs, expectedHead);
+        } catch (err) {
+          // An unreadable file may still contain translations: never overwrite.
+          if (!isNotFound(err)) continue;
+        }
+        if (existing !== null) continue;
+        const sourceNs = sourceState.source[seedNs] || {};
+        content = serializeTranslations(sourceNs, Object.keys(sourceNs));
+      }
+      files.push({ path: targetPath(lang, seedNs), content });
     }
   } else {
     const currentTargetText = serializeTranslations(currentTarget, Object.keys(nsSource));
