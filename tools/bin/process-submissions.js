@@ -5,11 +5,25 @@ import { createGitHubAdapter } from "../lib/adapters.js";
 import { processSubmissions } from "../lib/processor.js";
 import { githubJson } from "../lib/http.js";
 
-const adapter = createGitHubAdapter({ token: process.env.GITHUB_TOKEN });
+const notifyOnly = process.argv.includes("--notify-only");
+let summary = null;
 
-const summary = await processSubmissions({ adapter });
-const text = `${JSON.stringify(summary, null, 2)}\n`;
-console.log(text);
+if (!notifyOnly) {
+  const adapter = createGitHubAdapter({ token: process.env.GITHUB_TOKEN });
+  summary = await processSubmissions({ adapter });
+  const text = `${JSON.stringify(summary, null, 2)}\n`;
+  console.log(text);
+
+  if (process.env.RESULT_FILE) {
+    await fs.writeFile(process.env.RESULT_FILE, text, "utf8");
+  }
+} else if (process.env.RESULT_FILE) {
+  try {
+    summary = JSON.parse(await fs.readFile(process.env.RESULT_FILE, "utf8"));
+  } catch (err) {
+    console.warn(`No submission summary to notify: ${err.message}`);
+  }
+}
 
 /** Escape untrusted text before placing it in a Markdown table cell. */
 function cell(value) {
@@ -18,7 +32,7 @@ function cell(value) {
     .replace(/\r?\n/g, " ");
 }
 
-if (process.env.GITHUB_STEP_SUMMARY) {
+if (summary && process.env.GITHUB_STEP_SUMMARY) {
   const lines = [
     "## Submission processing",
     "",
@@ -87,7 +101,7 @@ async function notifyResults(results, token, prNumberOverride) {
   }
 }
 
-if (process.env.GITHUB_TOKEN && process.env.NOTIFY_RESULTS !== "false") {
+if (summary && process.env.GITHUB_TOKEN && process.env.NOTIFY_RESULTS !== "false") {
   try {
     await notifyResults(summary.results, process.env.GITHUB_TOKEN, process.env.PR_NUMBER);
   } catch (err) {
@@ -95,4 +109,4 @@ if (process.env.GITHUB_TOKEN && process.env.NOTIFY_RESULTS !== "false") {
   }
 }
 
-if (summary.results.some((r) => r.status === "error")) process.exitCode = 1;
+if (summary?.results?.some((r) => r.status === "error")) process.exitCode = 1;

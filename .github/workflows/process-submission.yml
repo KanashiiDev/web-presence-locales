@@ -48,6 +48,8 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           SOURCE_REPO: KanashiiDev/web-presence
           PR_NUMBER: ${{ inputs.pr_number || github.event.inputs.pr_number || '' }}
+          RESULT_FILE: ${{ runner.temp }}/submission-summary.json
+          NOTIFY_RESULTS: 'false'
         run: node tools/bin/process-submissions.js
 
       # Commits made with github.token do NOT trigger other workflows. Without
@@ -82,3 +84,11 @@ jobs:
           done
           echo "Could not publish manifest after 5 attempts" >&2
           exit 1
+
+      - name: Notify results
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ inputs.pr_number || github.event.inputs.pr_number || '' }}
+          RESULT_FILE: ${{ runner.temp }}/submission-summary.json
+        run: node tools/bin/process-submissions.js --notify-only
