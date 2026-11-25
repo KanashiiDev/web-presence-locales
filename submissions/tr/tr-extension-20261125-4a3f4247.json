@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "id": "tr-extension-20261125-4a3f4247",
+  "lang": "tr",
+  "ns": "extension",
+  "baseCommit": "f663755aebce9f77c586de8634f6363e1e53b57e",
+  "source": {
+    "commit": "9c2c74e23cca0e08922037a7f738c79a912b600e"
+  },
+  "changes": {
+    "translationEditor.confirmModal.localOnly": {
+      "value": "Yalnızca benim için uygula",
+      "baseTargetHash": "ebbd3fa2b7c6116bb3a90ef41ff1ad091beac92fed20fecd6a9a90f84858f839",
+      "sourceHash": "2059bcf8e68b6010f9043d85044cf951e52ca02a26bc42b8f1f4e056d13b0688"
+    },
+    "translationEditor.confirmModal.question": {
+      "value": "İngilizce kaynak metin \"{key}\" değişti, ancak çevirinizin hâlâ doğru olduğunu onaylıyorsunuz. Bu onay yalnızca tarayıcınızda mı geçerli olsun, yoksa depoya da katkıda bulunmak ister misiniz?",
+      "baseTargetHash": "2ad30bfcf9bce454ab8b5ee8182b2439ceb19ccf5a3235b0ab1c2995c6cd0ed5",
+      "sourceHash": "86b113f5f51f61a082f92af6204914c3971ac65c3e46b9f39a33fdbba8b09dc0"
+    },
+    "translationEditor.confirmModal.submit": {
+      "value": "Onayı gönderilmek üzere sıraya al",
+      "baseTargetHash": "852903e107cdad3f2a24986409eacb445bd27a4bbce360a26c236aea5625799f",
+      "sourceHash": "f8753311bc8b1f4f7a4631ebfd73769ae7e2c5c7dd7adeb7d96f474c4fe09cb1"
+    },
+    "translationEditor.confirmModal.title": {
+      "value": "Çeviriyi onayla",
+      "baseTargetHash": "3a04895f98d3e177756e9c5cbb355b39be32579aaedf5445c784273c5571f19f",
+      "sourceHash": "f1f4d095ec19a04990bb83c0e68ea61c09b538627e09ab1191b15a4c40eca0c1"
+    },
+    "translationEditor.downloadSource": {
+      "value": "İngilizce kaynak metni indir",
+      "baseTargetHash": "c602f2b3ef04a41cad43db28612a2c2a0ad2d26957b529a8c8a89e8a5c836062",
+      "sourceHash": "275ff04fbceffd7c9e8db8dd055daa93a8db8d394677ef1bed7e13a3277a1cd2"
+    },
+    "translationEditor.home.desc": {
+      "value": "Bir çeviriyi düzenlemek için dil seçin.",
+      "baseTargetHash": "794d349d3b754d27c725c588f2af19bfe6915834e31711259be9cb9acffbab13",
+      "sourceHash": "cc754d2ce2dbca4a168208a862100437b7946b6dd333999871c6225a8ef48b32"
+    },
+    "translationEditor.home.empty": {
+      "value": "Kullanılabilir dil yok.",
+      "baseTargetHash": "9ae14b5d41627506a106ac1fcac88bcf0890124c24998b987420475d29c582fc",
+      "sourceHash": "9cb8fc964fbb62cf6fed442e65c2c550cd584cdb5af2a4388ce0056bf2242bda"
+    },
+    "translationEditor.home.fileModal.title": {
+      "value": "{lang} için bir dosya seçin",
+      "baseTargetHash": "55dd93432210258eeec4cdb41759dcf949ada932920be41a1e50bf52e5047fbd",
+      "sourceHash": "3e2569939046412c0bf1ff1239af1dffa8304af68d045df54401c431494f7a09"
+    },
+    "translationEditor.home.publishedHint": {
+      "value": "GitHub'da kabul edilen çevirilerin oranı",
+      "baseTargetHash": "e846b6d6198b770167efec66f5c0cac5cb49e27e631ad2bb51c249dc010b722e",
+      "sourceHash": "d3132d63312475a5d15f64998260551a6b716aa55d066a972d5505cbe54a581c"
+    },
+    "translationEditor.home.publishedProgress": {
+      "value": "yayınlandı: %{percent}",
+      "baseTargetHash": "80a76b51bc953e044aa0b8e902a1e55c4f571bb51c1cec2314a1ee0b9a713b31",
+      "sourceHash": "1e0e20c7bef7a125666125e4d6789492e676485b530d5087f36f5b43c5d29d84"
+    },
+    "translationEditor.home.title": {
+      "value": "Diller",
+      "baseTargetHash": "05cd56e6cd6784164adfdd92d733d27e2b0d0825b77a357bf23659931ecebba1",
+      "sourceHash": "01f63cd39ff0598b4183db4656a99ac892cfe3977ad500f6ca464c017c5b6a36"
+    },
+    "translationEditor.home.wordsRemaining": {
+      "value": "Çevrilmeyi bekleyen {count} kelime",
+      "baseTargetHash": "95e581da3cdc071ab5a2ff7d73cf533b44bb4575e22e9684097d284da46dee89",
+      "sourceHash": "c8bf2dfb8c67a565b914915f4ff83b35a0585ba93f4ee542853e937460ab584d"
+    },
+    "translationEditor.validation.unsafeValue": {
+      "value": "{key}: çeviri işaretleme dili, javascript URL'si veya görünmez bir çift yönlü/ sıfır genişlikli karakter içeriyor",
+      "baseTargetHash": "b3406b98bc7b44a78da1e1ffdc13768999cda53ff2450ec81b5a2f27184e75b6",
+      "sourceHash": "cdb64248d42e1970d92177c4ea67f13d0e479fe150f83a9a2559ea265d1a724e"
+    }
+  }
+}
