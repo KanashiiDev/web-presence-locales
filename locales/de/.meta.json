@@ -13,7 +13,7 @@
   },
   "namespaces": {
     "extension": {
-      "targetBlobSha": "7b1fa58ee7446d0e197f1efdc6f6e9f1ab05478f",
+      "targetBlobSha": "acff0f1b49c4f1ca9272e3faecfda914fbdeec36",
       "keys": {
         "backup.export": {
           "sourceHash": "4b996e887a0b1f06c4cda9284373fbd9a6456832e24011cc79ae5af40274955e"
@@ -504,6 +504,9 @@
         "library.repo.removeTitle": {
           "sourceHash": "d63c8ba746f8b4a517b39e3956081ddb75c5f425eda25c33b764ea037c3d6df0"
         },
+        "library.repo.scriptCount": {
+          "sourceHash": "6a70015d2730a5fbbee5838ef531dd46fd9cbb28825c8b7c11819116641f3cdd"
+        },
         "library.script.currentVersion": {
           "sourceHash": "355440f9d995f843278900f543ccf5e3b169c19cc8d4a06c7bd08128a16f7e0a"
         },
@@ -809,6 +812,9 @@
         },
         "selector.editor.name.label": {
           "sourceHash": "6be1407c629d41f1e9fa79c3dda448120d17e75aa6cc8209ebea4073db37307c"
+        },
+        "selector.editor.name.placeholder": {
+          "sourceHash": "e5b1830a0221efffe0a1b35ee68548969574e46b8602c81a671018aa05550b63"
         },
         "selector.editor.refreshPage": {
           "sourceHash": "25715b60687e07121d93411e1c5fbadf8a3986116628ad7248dcbb5513c04f49"
@@ -1649,6 +1655,27 @@
         },
         "translationEditor.filter.untranslated": {
           "sourceHash": "b9f76ade8879128c9f2d99c791e124142eb55a8b6f04089e3485828d8ea92763"
+        },
+        "translationEditor.home.desc": {
+          "sourceHash": "cc754d2ce2dbca4a168208a862100437b7946b6dd333999871c6225a8ef48b32"
+        },
+        "translationEditor.home.empty": {
+          "sourceHash": "9cb8fc964fbb62cf6fed442e65c2c550cd584cdb5af2a4388ce0056bf2242bda"
+        },
+        "translationEditor.home.fileModal.title": {
+          "sourceHash": "3e2569939046412c0bf1ff1239af1dffa8304af68d045df54401c431494f7a09"
+        },
+        "translationEditor.home.publishedHint": {
+          "sourceHash": "d3132d63312475a5d15f64998260551a6b716aa55d066a972d5505cbe54a581c"
+        },
+        "translationEditor.home.publishedProgress": {
+          "sourceHash": "1e0e20c7bef7a125666125e4d6789492e676485b530d5087f36f5b43c5d29d84"
+        },
+        "translationEditor.home.title": {
+          "sourceHash": "01f63cd39ff0598b4183db4656a99ac892cfe3977ad500f6ca464c017c5b6a36"
+        },
+        "translationEditor.home.wordsRemaining": {
+          "sourceHash": "c8bf2dfb8c67a565b914915f4ff83b35a0585ba93f4ee542853e937460ab584d"
         },
         "translationEditor.importDrafts": {
           "sourceHash": "40eca36087278c6db6fb8bb46a50f0574b2855e71503a716f904fa87c5bd89f9"
