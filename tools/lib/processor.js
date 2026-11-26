@@ -109,7 +109,9 @@ async function buildOutcome({ adapter, langs, sourceState, lang, id, expectedHea
     else throw err;
   }
   const isNewTarget = currentTarget === null;
-  if (isNewTarget) currentTarget = { ...nsSource };
+  // A new file holds empty values so the runtime falls back to the current
+  // English source per key instead of freezing a stale English copy.
+  if (isNewTarget) currentTarget = Object.fromEntries(Object.keys(nsSource).map((key) => [key, '']));
   // A malformed target file must be rejected, not copied verbatim into the
   // next commit. The patch only QA-checks accepted keys, so unrelated bad
   // values would otherwise survive into the published translation file.
@@ -176,8 +178,9 @@ async function buildOutcome({ adapter, langs, sourceState, lang, id, expectedHea
   // result + archive documents are the only feedback channel. There is no
   // separate review queue to own or resolve.
 
+  const emptyTarget = (ns) => Object.fromEntries(Object.keys(sourceState.source[ns] || {}).map((key) => [key, '']));
   const seededTargets = {};
-  for (const seedNs of NAMESPACES) seededTargets[seedNs] = sourceState.source[seedNs] || {};
+  for (const seedNs of NAMESPACES) seededTargets[seedNs] = emptyTarget(seedNs);
   seededTargets[ns] = newTarget;
 
   const metaBase = !currentMeta && isNewTarget
@@ -234,7 +237,7 @@ async function buildOutcome({ adapter, langs, sourceState, lang, id, expectedHea
         }
         if (existing !== null) continue;
         const sourceNs = sourceState.source[seedNs] || {};
-        content = serializeTranslations(sourceNs, Object.keys(sourceNs));
+        content = serializeTranslations(Object.fromEntries(Object.keys(sourceNs).map((key) => [key, ''])), Object.keys(sourceNs));
       }
       files.push({ path: targetPath(lang, seedNs), content });
     }
