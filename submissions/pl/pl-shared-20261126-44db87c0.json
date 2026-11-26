@@ -1,0 +1,182 @@
+{
+  "schemaVersion": 1,
+  "id": "pl-shared-20261126-44db87c0",
+  "lang": "pl",
+  "ns": "shared",
+  "baseCommit": "7b848c4b863dfd8ff169f38111abc71a4be0868c",
+  "source": {
+    "commit": "51ca1bfe949ad916cd977065579d4809734b775a"
+  },
+  "changes": {
+    "common.all": {
+      "value": "Wszystko",
+      "baseTargetHash": "4ea049c67d6fba65c7cc077b99f07f1d2031796e6bae6eb2bb99af85c8d15e46",
+      "sourceHash": "ff3a0cd8c6bd7d84e0e3db7bf506993d91fdb24453bf7fe0f7ea99af3de3035f"
+    },
+    "common.allTime": {
+      "value": "Cały czas",
+      "baseTargetHash": "42a251cbc2a9192f9b2e31f770d24de6b8eaf90e19a484ce28fbbb4b845b566b",
+      "sourceHash": "85344ec3157881b21ddc2e0f5a1fd17f11040a67580dac25636606e08f804f63"
+    },
+    "common.artist": {
+      "value": "Wykonawca",
+      "baseTargetHash": "70c038bab4a2e7e42a683252c092af7544cbdf3be4d3a184ab4496c090a1c19b",
+      "sourceHash": "ee4766ac505f4a14e6d5194622142b3261295e9c7238494869e372d3846b9ce3"
+    },
+    "common.back": {
+      "value": "Wstecz",
+      "baseTargetHash": "553fc40ed3cd473ac5d498ff2623bd450ef076f0db9f83f6a7786f60958b9d3f",
+      "sourceHash": "14915da3d8e9261d9b66a05f10e2ffe6551b5e0a1b8aaf92fc07978e772f412a"
+    },
+    "common.cancel": {
+      "value": "Anuluj",
+      "baseTargetHash": "83c718302020be662dfdaeef1d5ca899ba5c943e13493966de6af4c3b99c435c",
+      "sourceHash": "1e2a729dd51ddc8f122e60f700b898f81c453ebbdce108e16f7ac604a8a2704b"
+    },
+    "common.confirm": {
+      "value": "Potwierdź",
+      "baseTargetHash": "9930a37672f6abe2fa161b2b181190d8942d983eb47a28fb596ecaceaa6c5db3",
+      "sourceHash": "944e484e89ecf64b76001a2965ed9727f6781c16c6b25d2cdeb25a9c4a84a297"
+    },
+    "common.delete": {
+      "value": "Usuń",
+      "baseTargetHash": "d155d178fe356413cba32df56c424576a11ecde8d1ab8645603b1d4e2ac3b67e",
+      "sourceHash": "7a71e80da660ca21161bf46a5afead086ff14c8582c14c4ff6bc28db8301fa2e"
+    },
+    "common.errorLabel": {
+      "value": "Błąd",
+      "baseTargetHash": "b793a0d28530aa97205197b12124cf79985e9aff81b83af7cb5cc92b6f9f64f5",
+      "sourceHash": "a87ef90de7e5bd05ae7367eff9946fca87496aac8843674a70baf38fc81d2a56"
+    },
+    "common.goToLink": {
+      "value": "Przejdź do linku",
+      "baseTargetHash": "60b95fdfa1f31150da7632a0e11486839baf9391413f602372df2cbfbf404c60",
+      "sourceHash": "38d69569f71d2be706bde357c38ff27602b3a615cb295e1b3c57457b2c4bb01b"
+    },
+    "common.info": {
+      "value": "Informacje",
+      "baseTargetHash": "87b1aed03be26c54d9d629a907941328cb5ef8560e68366df33cc9249851dc47",
+      "sourceHash": "8ccc5cea6957899094651c2d88c0ffd61432890fda2345637727a6801db83a37"
+    },
+    "common.language": {
+      "value": "Język",
+      "baseTargetHash": "f722ad1bc7f331328be77c578b4492e27a16b4a4819c5c154b85245d63574e7c",
+      "sourceHash": "8c2d7fa388003a5220fb28d21cccf38eb4349bd479c3a818d6da459d9daab8e6"
+    },
+    "common.logs": {
+      "value": "Logi",
+      "baseTargetHash": "28caf156fa75bfcaadf769f1ccf23714cf4fbb432617dbd42072cb33a953ed09",
+      "sourceHash": "c1476382f0f41f3d9eb44370c890f2977df1af7d153fdfbf25ff20f8c351052a"
+    },
+    "common.musicStats": {
+      "value": "Statystyki muzyczne",
+      "baseTargetHash": "fd30c938d2edbd530f8fc8931d5bd466a3aac71aa7e657aebaa17667cf2a81c4",
+      "sourceHash": "4d78afa92199686dc2aa1bed16f21ca7a1052fe1fa84b0215f8a6dc36572c492"
+    },
+    "common.noResults": {
+      "value": "Brak wyników.",
+      "baseTargetHash": "37e3ee48a7394ed90022cc5aadf9396f6568be41d755c6292388fa50ef69de38",
+      "sourceHash": "24146067db1b06e94448b1b855cbac7ebb33ec9111b5d571317f51d5b0a64fbb"
+    },
+    "common.ok": {
+      "value": "OK",
+      "baseTargetHash": "354d09a1db3163ffae6dbed4419f2ff6d723ba1e0cc9abc4a737b95c09a331c8",
+      "sourceHash": "0d166c27a7538e94ad728166bf31ead6198eb96f21c259325b40ee681633b527"
+    },
+    "common.save": {
+      "value": "Zapisz",
+      "baseTargetHash": "95a02c8457bb0f0415510c81f14bf6846159eb2646580028da24add3ce2be0a7",
+      "sourceHash": "68de8855d6b327b7cbc91924098f8915df38f6e4a0f7ab5a367c1cc8f9e89786"
+    },
+    "common.settings": {
+      "value": "Ustawienia",
+      "baseTargetHash": "a76f920bc8b565b8766d748fa5880ac94e3f16ccf1e73e29034b64d2c0870b06",
+      "sourceHash": "8d32b5b6ade2ae0b63f71047f68ccf3b3020264a0b7c232f7f817501680b29ca"
+    },
+    "common.source": {
+      "value": "Źródło",
+      "baseTargetHash": "2be878adc5ccb127e9aaa58196a8eec86966b777b39246b6c5b6259a7ac2da79",
+      "sourceHash": "6154d1323c84e4d08df950da4031108fe226bf1ceef5b90c727a1c23972a7ac4"
+    },
+    "common.topArtists": {
+      "value": "Najpopularniejsi wykonawcy",
+      "baseTargetHash": "794c6e2f695526aba14d59988fefc91ed30783ab3845e9ccfeacfb553a583f64",
+      "sourceHash": "ac94739cc55398842f5a617c9f21e4cd6c80c68dcf688f90b6c1fbfead2b7702"
+    },
+    "dialog.confirmDelete": {
+      "value": "Czy chcesz usunąć?",
+      "baseTargetHash": "b7f03332c8efb9e8ad6b32466284fbb00319eb3a25d264b15602d99efc85b752",
+      "sourceHash": "f52b53da94a395bdf534ec332b2b675916a1cdcd3f144139811fde42e387c0a7"
+    },
+    "dialog.warnDelete": {
+      "value": "Tej czynności nie można cofnąć.",
+      "baseTargetHash": "7ef2bc0337346c7e37fce1de773f7718887ba957e119668894b6391a3975ba20",
+      "sourceHash": "45c33d937cbb5d8c8ad393b891615945cb7c66264e0ab27acb089145c80685db"
+    },
+    "time.days_ago": {
+      "value": "{count} dni temu",
+      "baseTargetHash": "d6ac229d86e0871bfefa6465a739685fba6f8cd46b17d1d9e0716e2838d9a717",
+      "sourceHash": "ba5831e267b9408d97e180482852f6bfa0ff1e121dd83017c137c2241070238d"
+    },
+    "time.hour_ago.one": {
+      "value": "{count} godzinę temu",
+      "baseTargetHash": "fd42728dacc7532d00252d9121b1e2ba630d61e8b0a6e3459e4149299677944e",
+      "sourceHash": "9c2778721872d079f2f3000fa7b733e930894ffee34dc0c38d0af47ca0c41c29"
+    },
+    "time.hour_ago.other": {
+      "value": "{count} godziny temu",
+      "baseTargetHash": "cfc66bb16c43ccbccaf1652a6f4cd5e6d9c3e6f5b613d338f5de5b29b749f54d",
+      "sourceHash": "a77d7ab9bdf549dab2617af005b9f18b80499955c37d5d2526cde989439cfe81"
+    },
+    "time.just_now": {
+      "value": "przed chwilą",
+      "baseTargetHash": "ddc48954b8c0bf187b5ec3dd2512e61544ff9efd52996afde79fec30322484e3",
+      "sourceHash": "521f03251083df21708a2575b34ecdeabc10ca8c581c0831ed4a58ad9a85c883"
+    },
+    "time.minute_ago.one": {
+      "value": "{count} minutę temu",
+      "baseTargetHash": "8f73f45fc45c5335d0f24b6fae8b18138c6701f12aa74bd6068d21a7cd3f8d35",
+      "sourceHash": "b2fbb689d34ddcca8bbd90a1ca8ea441690dc1e9bfaafe8c8d04f94b38bbf7d9"
+    },
+    "time.minute_ago.other": {
+      "value": "{count} minuty temu",
+      "baseTargetHash": "0e1f867c731594f8b7e68e6bdac1a9108a7b4acb71abaed7c85fbc6e53abe62e",
+      "sourceHash": "7ee089730061e9c46fcce8035b584cfbd265d21048c6331fa186100d2f1d9e99"
+    },
+    "time.month_ago.one": {
+      "value": "{count} miesiąc temu",
+      "baseTargetHash": "89258d32ea6f57b3923f175bd64c43287b79a2b5262c03f800eb7c6f3dd8326c",
+      "sourceHash": "901056233075e249977935e6d184a673ecbcb086d74352138034407265d1dcbe"
+    },
+    "time.month_ago.other": {
+      "value": "{count} miesiąca temu",
+      "baseTargetHash": "eca83ef1301d589509ad8a395c08c30f2bcc072c880f91e006c93ba2a78d6302",
+      "sourceHash": "b1772f7b26ed2300f2bed5d77eb6b99ec04af876094cbfc7160b8d3033510aa0"
+    },
+    "time.week_ago.one": {
+      "value": "{count} tydzień temu",
+      "baseTargetHash": "fae9b8e9dd37da1c767f85b823aa1fcd9b01128960122fb7bbd87a424476436b",
+      "sourceHash": "2775f28023cb35519e273ee5f688c15290dfd6487996f6c2453fde9aa387d015"
+    },
+    "time.week_ago.other": {
+      "value": "{count} tygodnia temu",
+      "baseTargetHash": "3fae7329d622fca2a1b7be940ac2ab4a81c2773a6e540098a1755879c7213517",
+      "sourceHash": "74324c2a7fdf02ffde9cd53f459d5663a379aafe67208d40aba0ac2b5e3e232f"
+    },
+    "time.year_ago.one": {
+      "value": "{count} rok temu",
+      "baseTargetHash": "847417aeffc1050bbb3c04e709e28e793cfc4be6f35b4d795a653a500c8a90eb",
+      "sourceHash": "af0d8cd2662386e13f430daba8654913f42fa40bcf7492369922cb65c322576c"
+    },
+    "time.year_ago.other": {
+      "value": "{count} roku temu",
+      "baseTargetHash": "c563caa3750e90069abe6a6ff49dfe90b1f0fc41035f432ffff271e225d57e12",
+      "sourceHash": "a2cf7093cd54bc0833a064767650b7003ce5641d2710a3a5b4c1ea58069541ea"
+    },
+    "time.yesterday": {
+      "value": "wczoraj",
+      "baseTargetHash": "dec1271b4e11eb0f9f41730cb53154acf185a06d5be7b3bc75de6ab0a7758021",
+      "sourceHash": "9c43ca2b1eacf7ee4497fdb2ecbf206e13bc5d29f0d00bee68f91ac19a1e8c04"
+    }
+  }
+}
