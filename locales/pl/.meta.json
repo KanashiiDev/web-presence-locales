@@ -2868,8 +2868,291 @@
       }
     },
     "server": {
-      "targetBlobSha": "786c1f36e63699cb0c10d45454aa1e86ddc16f56",
-      "keys": {}
+      "targetBlobSha": "267862ee85a58b024241422f27e93abe33897e6f",
+      "keys": {
+        "actions.toggle_view": {
+          "sourceHash": "b0c7657dd7bfbaee45c1016fddf0ea804691a2e6da7d260d5e1fa49c04a965da"
+        },
+        "activity.current": {
+          "sourceHash": "ad3fbe4806ba1461e8023c1b2a47f3a4163e4cc0a481fb4ed53afe13633468c9"
+        },
+        "activity.empty": {
+          "sourceHash": "456066243304fea084c152d7fbd3ab9f821bf781d76bc76f6f2a8e3aa5f10e66"
+        },
+        "activity.last": {
+          "sourceHash": "44fafe32391d7542abe6e9c7f14b0947c49db442eab2f810411bd81a70be5207"
+        },
+        "activity.title": {
+          "sourceHash": "8e77c41d0b2899e6b9a880dcd6b41abf3b0fb9fa35e884cf45bda213ecf72788"
+        },
+        "app.title": {
+          "sourceHash": "80638d67b4d4a13624f28410725745324af76b3e760aeee3dfe5c3f1b109136a"
+        },
+        "chart.capture.auto": {
+          "sourceHash": "ca1c7f2fd555b9e3a68930e8011a3d319ca31beef246269508d6cfcb54f73fc2"
+        },
+        "chart.capture.large": {
+          "sourceHash": "a8328afe75ca78050a151a27842f31e4994b9bd62bf43b2ba1b22f16d1479c87"
+        },
+        "chart.capture.medium": {
+          "sourceHash": "8d0a7cc2180087d1ee791a677cacb9652387c265beaf8de1035e55e78cec16b0"
+        },
+        "chart.capture.resolution": {
+          "sourceHash": "4be1130d73c4eb499453623cd683ebfe8979526edc9d721f74a15c8761f4dbe2"
+        },
+        "chart.capture.rows": {
+          "sourceHash": "4b552e72da50727b97659d65b36293e6d290d658bc9d0d57aaa47dc613a1aedc"
+        },
+        "chart.capture.small": {
+          "sourceHash": "b3f9d5e97bf5133bfc35a1630c9c388cb85478d48a047c727c7c94c32201bdca"
+        },
+        "chart.capture.tall": {
+          "sourceHash": "fd4b7db8d72bd49e78393621ce087d6c0d8da485f5be911af06c76ae2f21f635"
+        },
+        "chart.capture.title": {
+          "sourceHash": "f33cafdea77be0c252342624c64463f7389c1430f33af0ff9870eb20a7543cd1"
+        },
+        "chart.capture.wide": {
+          "sourceHash": "512230050edaceea383b55fd8337dda88df4fc2bf57e5159a93fbcb94c55f3a2"
+        },
+        "chart.loading": {
+          "sourceHash": "a6e74479607dc62452dec0b25810854a1e56809baa4f9493177ff6ad047955e1"
+        },
+        "chart.minute_short": {
+          "sourceHash": "a57ef32614656ef00158fc7ab7e10cfed884b77f01a7c47a8416b0947b80a286"
+        },
+        "chart.minutes_listened": {
+          "sourceHash": "478f16f68ed69b994cab154d57b69cdf1f21e60e5c24ee9d01d2e7212b1a3b26"
+        },
+        "chart.minutes_watched": {
+          "sourceHash": "2d52b2f831a8da8e92d0098886d0aac45b5b67ac12e0521066c9f07e4da813b6"
+        },
+        "chart.range.alltime": {
+          "sourceHash": "fce67703696542b49b7cdebf1ca1ccb15ef4fce47c430dd9e86b6266b338eb74"
+        },
+        "chart.range.month": {
+          "sourceHash": "7980cc2bb53fd8d86b7886701452e07872dc7542e39659f5c394f3214a0cc0a9"
+        },
+        "chart.range.week": {
+          "sourceHash": "bab126a5eeec84b7db5d9d3093cbea0881c4c5bf9f0ef2804dc1fe6f26bbd659"
+        },
+        "chart.range.year": {
+          "sourceHash": "a52cd36ace3011d1281587bdd5f911ec3cf8e37b56765fcf4128778b6fd3c93a"
+        },
+        "chart.song.one": {
+          "sourceHash": "e9b53e8c5b955a239d344a0e6a4450f08a476afaa068e1a05b785236dad76f91"
+        },
+        "chart.song.other": {
+          "sourceHash": "3cacfa3940e301cfd9cc442eb23e41c67ebc90d603e7070ff59ce743d855a872"
+        },
+        "chart.summary.dialog.error.invalid": {
+          "sourceHash": "1bbd10093eb4c9561aac372599aee0c69b1131ed52605ab1c2d2891b6f4c4279"
+        },
+        "chart.summary.dialog.error.protocol": {
+          "sourceHash": "9f9a2cbf70c5eb5161ba188b8c300078f042ace1beb11fc4a3287823c0d83204"
+        },
+        "chart.summary.dialog.title": {
+          "sourceHash": "b677b593122f760b24474a8892fac0f513eebbbb3a7483079d2ba3c54b6f2417"
+        },
+        "chart.summary.empty": {
+          "sourceHash": "d80d23813d2c81061745cff896b5d69b763a4e98f7a465c5c2514df9a70ed62a"
+        },
+        "chart.summary.minutes_listened": {
+          "sourceHash": "580cbc4855bf2c26956ab1f9e94a8ec9bac2d594d80ff8464e6119bbd5b6b555"
+        },
+        "chart.summary.topSongs": {
+          "sourceHash": "67cd7864d2a031b0c0d59ee6bd811f89f2722b1d920799e38acb8dab12f4361c"
+        },
+        "chart.summary.tracks_played": {
+          "sourceHash": "b8b4a45a81aa8b96697ebf6d4d0bb1fd00de7f48753652a7d8028b0a014caca5"
+        },
+        "chart.summary.uniqueTrack.one": {
+          "sourceHash": "40cf32d8e2c3fa90f0873a5a7ef1c285d212479dd8b963bed7f6153f2962ac2b"
+        },
+        "chart.summary.uniqueTrack.other": {
+          "sourceHash": "d8998a44b4a9b44973eec836dc4c90f2ed876e001a105b1fbc08e3073377a13a"
+        },
+        "chart.tab.songs": {
+          "sourceHash": "3a3495deb78d7ea314b7109d9fe04b169741dba0a030335f6fe7e1ef9a759d97"
+        },
+        "chart.tab.summary": {
+          "sourceHash": "1383b1a907dec333e4d051b9bbce936159d6546645f9ab9f353ad4d2c4140c89"
+        },
+        "chart.tab.time": {
+          "sourceHash": "211958decf1fc881da57cc14fd877174fcf2f692c6ab0806a79569566a29d0b6"
+        },
+        "chart.tab.videos": {
+          "sourceHash": "15795bd766e9f5af393cb4ce6870a675fa434b986e3580b2fc07dff2ad30c5f6"
+        },
+        "chart.title.watch": {
+          "sourceHash": "0806b879725bfd62c33f9790e9e2d969a8f26fc52276fdc48430394e80b1264f"
+        },
+        "chart.total.duration": {
+          "sourceHash": "75b44fceec04768f7d98adfd86407c3ea776ee8c4dc3765fcc18937e7f970f7a"
+        },
+        "chart.track.one": {
+          "sourceHash": "3af21a655bd9d02be1612be550c68adb86daa38d6cf822d964f543b91bb616e0"
+        },
+        "chart.track.other": {
+          "sourceHash": "cf6bf982be574ed5854e78d8d362f6ba268f00c33ac1709fdc72e657a4462476"
+        },
+        "chart.track.video.one": {
+          "sourceHash": "15ce5ad80f2bcb51b9f0df34a1bb84e1c0131e0c64c87f280a0d174745ed725b"
+        },
+        "chart.track.video.other": {
+          "sourceHash": "acc4ea60d91fbed857a7626a0c24a15c6cfdae736973f00ceb6d37ba0e9a9097"
+        },
+        "chart.video.one": {
+          "sourceHash": "3e578b9415cee7150af252843f482a6a0831c8810c5df4ed4e86f85cf21a519e"
+        },
+        "chart.video.other": {
+          "sourceHash": "affd51cc5309fff195818c755cb8477ba0674f4acb5490ef6cc66de2be3696eb"
+        },
+        "footer.text": {
+          "sourceHash": "b5085e431ea3de9ce95b569886b6507e77b9c05deefa1de7bf1d0a96bda05627"
+        },
+        "history.release_hint": {
+          "sourceHash": "0ae4033bd55e9a930bcae7a42fa09ffaef4a394e0c788b88c6e28eeede96bde7"
+        },
+        "history.title": {
+          "sourceHash": "e2e51f16b0670fdcb48cc32dc4b778fd66f4849cd7fedb49489bd90d7b826d04"
+        },
+        "history.title.watch": {
+          "sourceHash": "8c23fecd69cd44d4c20d638ffdf9f8dab71c6c258796f004f77230e29211941e"
+        },
+        "logs.empty": {
+          "sourceHash": "870c0644a681038149a53e5969b67203aa12696bb3b9066beee6c185a77bcf9f"
+        },
+        "logs.error": {
+          "sourceHash": "de4bde65fdea4b6ac367d1dd28f2947a0c2f3bbcec7a8994e0923980141ff87b"
+        },
+        "logs.filter": {
+          "sourceHash": "36b023f07ddfd98fb2807dd3cb531a7f18703049c93acd4591c7749ac907d7d9"
+        },
+        "logs.info": {
+          "sourceHash": "bce110c730fe3070e6b6b14ddf016c1af911d203ae3f3aff728a67ef64fc5863"
+        },
+        "rpc.connected": {
+          "sourceHash": "c0bb610c69d87a0cd4bd3a3bdc65f1cb26874e19a63682044a16e6cf8de391d0"
+        },
+        "rpc.disconnected": {
+          "sourceHash": "081d286fc435d37b3d2cb19bc4e72423904046be3492b0b69110d73a36a302f0"
+        },
+        "rpc.label": {
+          "sourceHash": "89f15d17f25d6de392ed7ed0f70cc9962ff9de21e982d18e28ac180abe5ad0a1"
+        },
+        "rpc.status": {
+          "sourceHash": "bd2cb726f0e15d1f106cf983b18657483b7b212636bc80f459eb9f0145e00694"
+        },
+        "settings.auto_update_check": {
+          "sourceHash": "cccd192c7c0056173f675344d4648dc59847da4dc8547ce84189c36602431a01"
+        },
+        "settings.auto_update_check.note": {
+          "sourceHash": "25466e232351a2a4e6c19498b3202d5990eaee9c039fa59795624055a1c353f0"
+        },
+        "settings.discord_web_support": {
+          "sourceHash": "c179d79aa5a67cbc9094e617d0f6514e116722fd6898c55b67dcf7663670c1f8"
+        },
+        "settings.discord_web_support.note": {
+          "sourceHash": "1d247802d70df0a088f1a67c883fb65c2bbd53931283f9d37f05c16263f01bd1"
+        },
+        "settings.export_activity_files": {
+          "sourceHash": "f7137a35830d565295d2ac1b84a49a684b55b8016cfc8677541fba573aded38b"
+        },
+        "settings.export_activity_files.note": {
+          "sourceHash": "01579f84b84e020ea305e25036d6d58bd1233de5fb938f88e82aec7a87375308"
+        },
+        "settings.keep_history": {
+          "sourceHash": "edaae8a02d5fc443dc5cc467cb4aaae36396c790fad73b2c2a5972f984da10be"
+        },
+        "settings.keep_history.note": {
+          "sourceHash": "3070cc15c53f0d6ae9ee866a134c951ce21e0d1d3e51b1bffce01872af976fdd"
+        },
+        "settings.keep_logs": {
+          "sourceHash": "0a37504bd24472475760b0b59c4effec7bc4bd8c6dd90e286624944cc48f38ae"
+        },
+        "settings.keep_logs.note": {
+          "sourceHash": "2c645e510ff4a2a52406047afa865df86047396dd808004b2a21bfdb8fb564ae"
+        },
+        "settings.log_media_update": {
+          "sourceHash": "bdcf33d8aef4a8437b9c69a1e722c708c04c76512a8b365f2d11eb3e4636830b"
+        },
+        "settings.log_media_update.note": {
+          "sourceHash": "d7cdaec160c2fbf260217ba58b85c35d87385e32a4025fdd9db068e2cd9586cb"
+        },
+        "settings.max_log_size": {
+          "sourceHash": "a74ca5336a14fcb04320931a760d44c3eb3ad1bff1e2e6727a57b8556c36ac27"
+        },
+        "settings.max_log_size.note": {
+          "sourceHash": "ade33176d29ca74d05d268e906a3ae4652980b36dbf99a4f534d4d95f87af284"
+        },
+        "settings.message.noChanges": {
+          "sourceHash": "9bc5728939ae27d00f2dd79456af90393f68b4714e24235ea997713701ac7db7"
+        },
+        "settings.message.reset": {
+          "sourceHash": "9397b4ed993461fc3af50956fb6254541196420e5ed91c087fed469e30d9e08a"
+        },
+        "settings.message.saved": {
+          "sourceHash": "85141f546b0e375e6f8df999cb6f1d6003c200ae58211ce92b925e59c6adce1a"
+        },
+        "settings.newPort": {
+          "sourceHash": "f8e03794ef5378dade75c882d53d98d4342e0e17ee69e9f1677b17b3f7af1be8"
+        },
+        "settings.open.directory": {
+          "sourceHash": "a9561be6e1bcf3f6b009ee5869289e2fbea509c2923546d16789f9a093be0e65"
+        },
+        "settings.open.directory.error": {
+          "sourceHash": "ff0b20faa2ce23ac34cfa097c824aa9652da3dea4146c1fa3d1d42d420799167"
+        },
+        "settings.open.directory.not_found": {
+          "sourceHash": "902bd82a593ebaad43cc6a910086e856d001455f08487804ab8ef267ae33af71"
+        },
+        "settings.port": {
+          "sourceHash": "326c6eabe62a3c783f33f02be3704ed6ca4b80a7c525956fb41e5b3dbc4c07bd"
+        },
+        "settings.port.note": {
+          "sourceHash": "0f98b0bac67a32d78680eccf168d5b76995688d976cd80dc47e82cfc75226c07"
+        },
+        "settings.redirect.fail": {
+          "sourceHash": "5e5fdf7edc82e2883dbf5e75d250572abd4ad85a518dfa574fc157e07c9f64b9"
+        },
+        "settings.reset": {
+          "sourceHash": "b702dc6c97231189e5d7cecf67c06f1e154249a04f6660035068e5cad0c38b9a"
+        },
+        "settings.reset.complete": {
+          "sourceHash": "0776844c1430943d0ab092c7790a8454e124960a9e2450c9148fb1c1d873dec6"
+        },
+        "settings.reset.fail": {
+          "sourceHash": "ed9a37c430427a6cdb45d885f39cbfebbdc9335131d19e97d71159e5de598384"
+        },
+        "settings.save": {
+          "sourceHash": "05f9a15b1601056294727de899c2ee926065a2d93521a67459bc4bebb0d3e27e"
+        },
+        "settings.saved": {
+          "sourceHash": "731143cd7705b4fc4dd68aa591f95abf9b5516804d86d5d33b8d2affd5b2826e"
+        },
+        "settings.saving": {
+          "sourceHash": "e59e911aa8ffd92b4f862aeca866e371a5e74de022dadc05ba9ebab44ce7558e"
+        },
+        "settings.update_check_interval": {
+          "sourceHash": "747d86f9f45cc54203b8e2d6807a0f3dada82fa9c9f1938d9a6756e13e2ec90b"
+        },
+        "settings.update_check_interval.note": {
+          "sourceHash": "9df81021cc9f7400cf43a049ba4e95bc1d582b5b9bc5f78c4cf6a3a1731e5e87"
+        },
+        "settings.wnp_obs_support": {
+          "sourceHash": "42cfbbe48be7ea86fb8a3d91e9751ce28a0c881c819c3aea2a80ceee07d398bf"
+        },
+        "settings.wnp_obs_support.note": {
+          "sourceHash": "741b9524a11e4ade3d939b66ee4b4bbcc23995f0f39a1ca6ca7156479f1b087d"
+        },
+        "settings.wnp_rainmeter_support": {
+          "sourceHash": "a19382a8a36193523ff71bbb9c2290732f220cd3d500221caf9002ec248f4431"
+        },
+        "settings.wnp_rainmeter_support.note": {
+          "sourceHash": "5176da7e41206325527256f2bc91b821e7e4855f16b4053f7c0ac82edcbdbfb1"
+        }
+      }
     },
     "shared": {
       "targetBlobSha": "c6ad8ec024fb71d944c5342d35c0c0f1af865495",
