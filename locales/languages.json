@@ -27,6 +27,11 @@
     "extension": true,
     "server": true
   },
+  "pl": {
+    "label": "Polish",
+    "extension": true,
+    "server": true
+  },
   "pt-br": {
     "label": "Brazilian Portuguese",
     "extension": true,
