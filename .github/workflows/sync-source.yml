@@ -64,11 +64,11 @@ jobs:
             # sync-source.js also removes orphan metadata keys from every
             # language, so check and stage the whole locales tree, not just en.
             # `git diff --quiet` ignores untracked files, so use porcelain.
-            if [ -z "$(git status --porcelain -- locales runtime/orphan-cleanup)" ]; then
+            if [ -z "$(git status --porcelain -- locales)" ]; then
               echo "English mirror and metadata are already current"
               exit 0
             fi
-            git add locales runtime/orphan-cleanup
+            git add locales
             git commit -m "chore: sync English source mirror [skip ci]"
             if git push origin "HEAD:$BRANCH"; then
               exit 0

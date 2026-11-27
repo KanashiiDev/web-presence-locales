@@ -8,34 +8,39 @@
  *   GITHUB_TOKEN=... node tools/bin/sync-source.js --ref <sha>   # pin a commit
  *   node tools/bin/sync-source.js            # verify local mirror only
  */
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import fsp from 'node:fs/promises';
-import { fetchGithubSource, readLocalSource } from '../lib/source.js';
-import { localePath, readJsonIfExists, writeIfChanged, resolveWithin } from '../lib/fsutil.js';
-import { serializeTranslations } from '../lib/util.js';
-import { teHashSource } from '../lib/hash.js';
-import { detectSafeRenames, mergeSafeRenames } from '../lib/renames.js';
-import { resolveCleanupOrphans } from '../lib/options.js';
-import { ensureHashVersion, serializeMeta } from '../lib/metadata.js';
-import { readLanguages } from '../lib/languages.js';
-import { planOrphanCleanup, applyOrphanCleanup } from '../lib/orphans.js';
-import { NAMESPACES, SOURCE_LANG, SOURCE_REPO, SOURCE_BRANCH, META_FILE } from '../lib/constants.js';
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { fetchGithubSource, readLocalSource } from "../lib/source.js";
+import { localePath, readJsonIfExists, writeIfChanged } from "../lib/fsutil.js";
+import { serializeTranslations } from "../lib/util.js";
+import { teHashSource } from "../lib/hash.js";
+import { detectSafeRenames, mergeSafeRenames } from "../lib/renames.js";
+import { resolveCleanupOrphans } from "../lib/options.js";
+import { ensureHashVersion, serializeMeta } from "../lib/metadata.js";
+import { readLanguages } from "../lib/languages.js";
+import { planOrphanCleanup, applyOrphanCleanup } from "../lib/orphans.js";
+import { NAMESPACES, SOURCE_LANG, SOURCE_REPO, SOURCE_BRANCH, META_FILE } from "../lib/constants.js";
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const idx = process.argv.indexOf('--token');
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+const idx = process.argv.indexOf("--token");
 const token = idx >= 0 ? process.argv[idx + 1] : process.env.GITHUB_TOKEN;
-const refIdx = process.argv.indexOf('--ref');
-const ref = refIdx >= 0 ? process.argv[refIdx + 1] : (process.env.SOURCE_SHA || SOURCE_BRANCH);
+const refIdx = process.argv.indexOf("--ref");
+const ref = refIdx >= 0 ? process.argv[refIdx + 1] : process.env.SOURCE_SHA || SOURCE_BRANCH;
 
 if (!token) {
   const local = await readLocalSource(root);
-  console.log(JSON.stringify({
-    mode: 'verify',
-    commit: local.commit,
-    blobs: local.blobs,
-    note: 'No token supplied: verified local mirror only. Pass --token to fetch upstream.',
-  }, null, 2));
+  console.log(
+    JSON.stringify(
+      {
+        mode: "verify",
+        commit: local.commit,
+        blobs: local.blobs,
+        note: "No token supplied: verified local mirror only. Pass --token to fetch upstream.",
+      },
+      null,
+      2,
+    ),
+  );
   process.exit(0);
 }
 
@@ -47,10 +52,7 @@ const changed = [];
 // Orphan cleanup is the default: a stale target key is dead weight and can
 // never be removed through the editor (rows are built from English keys only).
 // Only an explicit `false` opts out.
-const cleanupOrphans = resolveCleanupOrphans(
-  process.env.CLEANUP_ORPHANS_DISPATCH,
-  process.env.CLEANUP_ORPHANS_INPUT,
-);
+const cleanupOrphans = resolveCleanupOrphans(process.env.CLEANUP_ORPHANS_DISPATCH, process.env.CLEANUP_ORPHANS_INPUT);
 const metaOrphansRemoved = [];
 
 for (const ns of NAMESPACES) {
@@ -58,17 +60,21 @@ for (const ns of NAMESPACES) {
   const text = upstream.raw?.[ns] ?? serializeTranslations(upstream.source[ns]);
   if (await writeIfChanged(file, text)) changed.push(ns);
 }
-const sourceMetaFile = localePath(root, SOURCE_LANG, '.source.json');
+const sourceMetaFile = localePath(root, SOURCE_LANG, ".source.json");
 const existingMeta = await readJsonIfExists(sourceMetaFile);
 const safeRenames = mergeSafeRenames(existingMeta?.safeRenames, detectedRenames);
-const sourceMeta = JSON.stringify({
-  repo: SOURCE_REPO,
-  branch: process.env.SOURCE_BRANCH || SOURCE_BRANCH,
-  commit: upstream.commit,
-  blobs: upstream.blobs,
-  ...(Object.keys(safeRenames).length ? { safeRenames } : {}),
-}, null, 2);
-if (await writeIfChanged(sourceMetaFile, `${sourceMeta}\n`)) changed.push('.source.json');
+const sourceMeta = JSON.stringify(
+  {
+    repo: SOURCE_REPO,
+    branch: process.env.SOURCE_BRANCH || SOURCE_BRANCH,
+    commit: upstream.commit,
+    blobs: upstream.blobs,
+    ...(Object.keys(safeRenames).length ? { safeRenames } : {}),
+  },
+  null,
+  2,
+);
+if (await writeIfChanged(sourceMetaFile, `${sourceMeta}\n`)) changed.push(".source.json");
 
 const langs = await readLanguages(root);
 for (const lang of Object.keys(langs)) {
@@ -135,27 +141,25 @@ if (cleanupOrphans) {
   // Renames and metadata orphans were already handled above. This pass removes
   // the remaining stale keys from the target files themselves.
   const plans = await planOrphanCleanup({ root, sourceState: { source: upstream.source }, langs });
-  const reportPath = resolveWithin(root, 'runtime/orphan-cleanup', `${upstream.commit}.json`);
-  orphanCleanup = {
-    sourceCommit: upstream.commit,
-    targetKeys: plans.flatMap((plan) => plan.orphanTargetKeys.map((key) => ({ lang: plan.lang, ns: plan.ns, key }))),
-    metaKeys: metaOrphansRemoved,
-  };
   if (plans.length) await applyOrphanCleanup({ plans });
-  await fsp.mkdir(path.dirname(reportPath), { recursive: true });
-  if (await writeIfChanged(reportPath, `${JSON.stringify(orphanCleanup, null, 2)}\n`)) {
-    changed.push(`runtime/orphan-cleanup/${upstream.commit}.json`);
-  }
+  orphanCleanup = {
+    removedFromTargets: plans.reduce((count, plan) => count + plan.orphanTargetKeys.length, 0),
+    removedFromMeta: metaOrphansRemoved.length,
+  };
 }
 
-console.log(JSON.stringify({
-  mode: 'sync',
-  commit: upstream.commit,
-  previousCommit: local.commit,
-  ref,
-  changed,
-  cleanupOrphans,
-  orphanCleanup: orphanCleanup
-    ? { removedFromTargets: orphanCleanup.targetKeys.length, removedFromMeta: orphanCleanup.metaKeys.length }
-    : null,
-}, null, 2));
+console.log(
+  JSON.stringify(
+    {
+      mode: "sync",
+      commit: upstream.commit,
+      previousCommit: local.commit,
+      ref,
+      changed,
+      cleanupOrphans,
+      orphanCleanup,
+    },
+    null,
+    2,
+  ),
+);
