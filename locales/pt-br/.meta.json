@@ -4,16 +4,16 @@
   "lang": "pt-br",
   "source": {
     "repo": "KanashiiDev/web-presence",
-    "commit": "51ca1bfe949ad916cd977065579d4809734b775a",
+    "commit": "12ea65b0cac6f8e7fc8fb464ee140f22a9e87f3c",
     "blobs": {
-      "extension": "2e6953ad40b69806487ea6342fafeb40d2c80bbb",
+      "extension": "3ff7527103fd5d98b10fde4383d5286ebf1d8870",
       "server": "786c1f36e63699cb0c10d45454aa1e86ddc16f56",
       "shared": "c6ad8ec024fb71d944c5342d35c0c0f1af865495"
     }
   },
   "namespaces": {
     "extension": {
-      "targetBlobSha": "8c4c73c01f7a5d08dcade47b3b2a499157ee1f6e",
+      "targetBlobSha": "2b486ae4a08ec5ab8c8eb9409e1fb36206e0df46",
       "keys": {
         "backup.export": {
           "sourceHash": "4b996e887a0b1f06c4cda9284373fbd9a6456832e24011cc79ae5af40274955e"
@@ -1629,14 +1629,8 @@
         "translationEditor.error.unsupportedHashVersion": {
           "sourceHash": "148fe9fd6bda1e2c5562d6509aeefb008ac5377de3a67e04c919415230357a9b"
         },
-        "translationEditor.exportDrafts": {
-          "sourceHash": "9275fc21fbfa97eefd09f372e7ef78ed0e1f5e43cf984960cc0f805a2cefc31f"
-        },
         "translationEditor.exportLocale": {
           "sourceHash": "191ef0816a2858cdb2c3bcadf47b9ca743fc897467ee766d31a392565a09b417"
-        },
-        "translationEditor.exportedDrafts": {
-          "sourceHash": "9022644a55349f111566416857ba9a60748155757a74a0e6fb8c0cd2d9fa35b6"
         },
         "translationEditor.file": {
           "sourceHash": "96cf540f6200b4b20593bd412e06af8beac8111c91fa304e2c18acb8deb06832"
@@ -1656,9 +1650,6 @@
         "translationEditor.filter.untranslated": {
           "sourceHash": "b9f76ade8879128c9f2d99c791e124142eb55a8b6f04089e3485828d8ea92763"
         },
-        "translationEditor.importDrafts": {
-          "sourceHash": "40eca36087278c6db6fb8bb46a50f0574b2855e71503a716f904fa87c5bd89f9"
-        },
         "translationEditor.importLocale": {
           "sourceHash": "559409a98c46052911338a9093e7b23efdca7b0bf4b891082aaea5bd5e1416a5"
         },
@@ -1676,9 +1667,6 @@
         },
         "translationEditor.importModal.rejected": {
           "sourceHash": "e756240ac1d3a42c020e03ea11fc4e554b5c6236fbb035a4266789dcb553ae16"
-        },
-        "translationEditor.importModal.title": {
-          "sourceHash": "556007aa8a6d85eab8ce7d959ddd902f8ede0d8b16ed20af415e7911a2be59dd"
         },
         "translationEditor.key": {
           "sourceHash": "3b3a854456c85034b8e28de52c060a8613273c033e998df4009dd56139e4f647"
@@ -1781,9 +1769,6 @@
         },
         "translationEditor.qa.tokenMissing": {
           "sourceHash": "3c9d965977ada297e7254922e36645715935236149613fe4f432f378a0c42922"
-        },
-        "translationEditor.qa.unverified": {
-          "sourceHash": "441b2976d961dabab154823db25873fc2cc8f87f48fcf82a8943dfd718fabd0d"
         },
         "translationEditor.qa.value": {
           "sourceHash": "e9397ff17c395ef18032eb3f909b0d799681df3346e69617c498ea305fc10c1f"

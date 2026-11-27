@@ -4,16 +4,16 @@
   "lang": "ru",
   "source": {
     "repo": "KanashiiDev/web-presence",
-    "commit": "51ca1bfe949ad916cd977065579d4809734b775a",
+    "commit": "12ea65b0cac6f8e7fc8fb464ee140f22a9e87f3c",
     "blobs": {
-      "extension": "2e6953ad40b69806487ea6342fafeb40d2c80bbb",
+      "extension": "3ff7527103fd5d98b10fde4383d5286ebf1d8870",
       "server": "786c1f36e63699cb0c10d45454aa1e86ddc16f56",
       "shared": "c6ad8ec024fb71d944c5342d35c0c0f1af865495"
     }
   },
   "namespaces": {
     "extension": {
-      "targetBlobSha": "b03170c3764105821d759305c8c4bfa2e2b57d09",
+      "targetBlobSha": "bca6bb72f681864e92e0a70109d4a7c009d7c3e3",
       "keys": {
         "backup.export": {
           "sourceHash": "4b996e887a0b1f06c4cda9284373fbd9a6456832e24011cc79ae5af40274955e"
