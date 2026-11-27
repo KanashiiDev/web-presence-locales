@@ -39,7 +39,7 @@ export function validateSubmission(payload, { langs, namespaces } = {}) {
   if (typeof payload.ns !== 'string' || !NS_RE.test(payload.ns)) fail('ns is invalid');
   if (typeof payload.baseCommit !== 'string' || !SHA1_RE.test(payload.baseCommit)) fail('baseCommit must be a 40-hex SHA');
 
-  if (langs && typeof payload.ns === 'string' && !namespaces.includes(payload.ns)) {
+  if (Array.isArray(namespaces) && typeof payload.ns === 'string' && !namespaces.includes(payload.ns)) {
     fail('ns is not an allowed namespace');
   }
 
