@@ -27,6 +27,11 @@
     "extension": true,
     "server": true
   },
+  "nl": {
+    "label": "Dutch",
+    "extension": true,
+    "server": true
+  },
   "pl": {
     "label": "Polish",
     "extension": true,
